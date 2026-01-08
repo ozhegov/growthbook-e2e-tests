@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: growthbook-mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - mongodata:/data/db
+    ports:
+      - "27017:27017"
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  growthbook:
+    image: growthbook/growthbook:latest
+    container_name: growthbook-app
+    ports:
+      - "3000:3000"
+      - "3100:3100"
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      MONGODB_URI: mongodb://root:password@mongo:27017/growthbook?authSource=admin
+      NODE_ENV: development
+    volumes:
+      - uploads:/usr/local/src/app/packages/back-end/uploads
+    restart: unless-stopped
+
+volumes:
+  mongodata:
+  uploads:
