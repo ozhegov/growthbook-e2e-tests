@@ -32,3 +32,6 @@ Thumbs.db
 logs/
 *.log
 npm-debug.log*
+
+# Storage (Playwright auth state)
+storage/*.json

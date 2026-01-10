@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
-    testDir: './tests',
+    testDir: './e2e/tests',
     testMatch: /.*\.test\.ts/,
     fullyParallel: true,
     forbidOnly: !!process.env.CI,
@@ -31,4 +31,5 @@ export default defineConfig({
             use: { ...devices['Desktop Safari'] },
         },
     ],
+    globalSetup: require.resolve('./e2e/setup/global-setup'),
 });
