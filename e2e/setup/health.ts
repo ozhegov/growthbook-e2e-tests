@@ -1,4 +1,4 @@
-import { API_BASE_URL, MAX_RETRIES, RETRY_DELAY, REQUEST_TIMEOUT } from './config'
+import { API_BASE_URL, MAX_RETRIES, RETRY_DELAY, REQUEST_TIMEOUT } from '../config'
 
 /**
  * Проверка состояния GrowthBook API перед global-setup для запуска E2E тестов.

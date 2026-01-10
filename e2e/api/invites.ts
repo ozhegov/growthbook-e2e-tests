@@ -1,5 +1,5 @@
 import { APIRequestContext } from '@playwright/test'
-import { API_BASE_URL } from '../setup/config'
+import { API_BASE_URL } from '../config'
 import { User } from './types'
 
 /**

@@ -1,5 +1,5 @@
 import { User } from '../api/types'
-import { RUN_ID } from '../setup/config'
+import { RUN_ID } from '../config'
 
 export const USERS: User[] = [
     {

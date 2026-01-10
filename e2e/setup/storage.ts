@@ -1,6 +1,6 @@
 import path from 'path'
 import { APIRequestContext } from '@playwright/test'
-import { STORAGE_DIR } from './config'
+import { STORAGE_DIR } from '../config'
 import { UserRole } from '../api/types'
 
 /**
