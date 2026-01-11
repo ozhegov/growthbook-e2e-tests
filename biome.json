@@ -1,0 +1,66 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.3.11/schema.json",
+	"files": {
+		"includes": [
+			"**/*.ts",
+			"**/*.tsx",
+			"!**/node_modules",
+			"!**/.playwright",
+			"!**/allure-report",
+			"!**/allure-results",
+			"!**/test-results"
+		]
+	},
+	"javascript": {
+		"formatter": {
+			"enabled": true,
+			"indentStyle": "space",
+			"indentWidth": 2,
+			"lineEnding": "lf",
+			"lineWidth": 100,
+			"semicolons": "always",
+			"quoteStyle": "single"
+		}
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"style": {
+				"useConst": {
+					"level": "error",
+					"fix": "safe"
+				},
+				"useSingleVarDeclarator": {
+					"level": "error",
+					"fix": "safe"
+				},
+				"useConsistentCurlyBraces": {
+					"level": "error",
+					"fix": "safe"
+				},
+				"useConsistentTypeDefinitions": {
+					"level": "warn",
+					"fix": "safe"
+				},
+				"useShorthandAssign": {
+					"level": "error",
+					"fix": "safe"
+				}
+			},
+			"suspicious": {
+				"noDoubleEquals": {
+					"level": "error",
+					"fix": "safe"
+				}
+			}
+		}
+	},
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
+		}
+	}
+}

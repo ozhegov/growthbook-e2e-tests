@@ -1,10 +1,10 @@
-import { APIRequestContext } from '@playwright/test'
-import { API_BASE_URL } from '../config'
-import { User } from '../types/user'
+import type { APIRequestContext } from '@playwright/test';
+import { API_BASE_URL } from '../config';
+import type { User } from '../types/user';
 
 /**
  * Приглашение пользователя админом в организацию через GrowthBook API.
- * 
+ *
  * @param req - APIRequestContext для выполнения запроса приглашения.
  * @param adminToken - авторизационный токен администратора.
  * @param user - данные приглашаемого пользователя (email и роль).
@@ -13,34 +13,34 @@ import { User } from '../types/user'
  * @throws Error если запрос выполнен со статусом не 2xx или ключ приглашения отсутствует.
  */
 export async function inviteUser(
-    req: APIRequestContext,
-    adminToken: string,
-    user: User,
-    orgId: string
+  req: APIRequestContext,
+  adminToken: string,
+  user: User,
+  orgId: string,
 ): Promise<string> {
-    const res = await req.post(`${API_BASE_URL}/invite`, {
-        headers: {
-            Authorization: `Bearer ${adminToken}`,
-            ...(orgId && { 'X-Organization': orgId })
-        },
-        data: {
-            email: user.email,
-            role: user.role.toLowerCase()
-        }
-    })
+  const res = await req.post(`${API_BASE_URL}/invite`, {
+    headers: {
+      Authorization: `Bearer ${adminToken}`,
+      ...(orgId && { 'X-Organization': orgId }),
+    },
+    data: {
+      email: user.email,
+      role: user.role.toLowerCase(),
+    },
+  });
 
-    if (!res.ok()) {
-        throw new Error(`Неуспешное приглашение пользователя "${user.email}": ${res.status()}`)
-    }
+  if (!res.ok()) {
+    throw new Error(`Неуспешное приглашение пользователя "${user.email}": ${res.status()}`);
+  }
 
-    const { inviteUrl } = await res.json()
-    const key = new URL(inviteUrl).searchParams.get('key')
+  const { inviteUrl } = await res.json();
+  const key = new URL(inviteUrl).searchParams.get('key');
 
-    if (!key) {
-        throw new Error(`Отсутствует ключ приглашения пользователя "${user.email}"`)
-    }
+  if (!key) {
+    throw new Error(`Отсутствует ключ приглашения пользователя "${user.email}"`);
+  }
 
-    return key
+  return key;
 }
 
 /**
@@ -55,28 +55,24 @@ export async function inviteUser(
  * @param key - ключ приглашения (параметр `key` из inviteUrl).
  * @throws Error если ключ приглашения отсутствует или приглашение не удалось принять за 3 попытки.
  */
-export async function acceptInviteWithRetry(
-    req: APIRequestContext,
-    token: string,
-    key: string
-) {
-    if (!key) {
-        throw new Error('Ключ приглашения отсутствует')
-    }
+export async function acceptInviteWithRetry(req: APIRequestContext, token: string, key: string) {
+  if (!key) {
+    throw new Error('Ключ приглашения отсутствует');
+  }
 
-    let lastStatus: number | undefined
+  let lastStatus: number | undefined;
 
-    for (let i = 0; i < 3; i++) {
-        const res = await req.post(`${API_BASE_URL}/invite/accept`, {
-            headers: { Authorization: `Bearer ${token}` },
-            data: { key }
-        })
+  for (let i = 0; i < 3; i++) {
+    const res = await req.post(`${API_BASE_URL}/invite/accept`, {
+      headers: { Authorization: `Bearer ${token}` },
+      data: { key },
+    });
 
-        if (res.ok()) return
-        lastStatus = res.status()
+    if (res.ok()) return;
+    lastStatus = res.status();
 
-        await new Promise(res => setTimeout(res, 500))
-    }
+    await new Promise((res) => setTimeout(res, 500));
+  }
 
-    throw new Error(`Неуспешное принятие приглашения за 3 попытки (последний статус: ${lastStatus})`)
+  throw new Error(`Неуспешное принятие приглашения за 3 попытки (последний статус: ${lastStatus})`);
 }
