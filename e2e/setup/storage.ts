@@ -1,7 +1,7 @@
 import path from 'path'
 import { APIRequestContext } from '@playwright/test'
 import { STORAGE_DIR } from '../config'
-import { UserRole } from '../api/types'
+import { UserRole } from '../types/user-role'
 
 /**
  * Сохраняет состояние сессии (storage state) из APIRequestContext в JSON-файл,

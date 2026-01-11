@@ -1,4 +1,4 @@
-import { User } from '../api/types'
+import { User } from '../types/user'
 import { RUN_ID } from '../config'
 
 export const USERS: User[] = [

@@ -1,12 +1,3 @@
-export type UserRole = 'ADMIN' | 'ENGINEER' | 'EXPERIMENTER'
-
-export interface User {
-  role: UserRole
-  email: string
-  password: string
-  name: string
-}
-
 export interface AuthResponse {
   token: string
   projectId?: string

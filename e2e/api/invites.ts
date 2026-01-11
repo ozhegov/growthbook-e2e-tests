@@ -1,6 +1,6 @@
 import { APIRequestContext } from '@playwright/test'
 import { API_BASE_URL } from '../config'
-import { User } from './types'
+import { User } from '../types/user'
 
 /**
  * Приглашение пользователя админом в организацию через GrowthBook API.
