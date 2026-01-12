@@ -2,6 +2,7 @@ import type { APIRequestContext } from '@playwright/test';
 import { API_BASE_URL } from '../config';
 import type { User } from '../types/user';
 import type { AuthResponse } from './types';
+
 /**
  * Логин пользователя через GrowthBook API.
  *
