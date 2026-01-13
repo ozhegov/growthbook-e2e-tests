@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { type BrowserContext, test as base } from '@playwright/test';
-import * as allure from 'allure-js-commons';
 import { STORAGE_DIR } from '../config';
+import { setAllureRole } from '../helpers/allure';
 import type { UserRole } from '../types/user-role';
 import { getRoleFromTitle } from './helpers';
 
@@ -21,7 +21,7 @@ interface AuthFixtures {
 export const test = base.extend<AuthFixtures>({
   role: async (_, use, testInfo) => {
     const role = getRoleFromTitle(testInfo.title);
-    await allure.label('role', role.toLowerCase());
+    await setAllureRole(role);
 
     await use(role);
   },

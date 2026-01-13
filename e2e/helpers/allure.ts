@@ -1,10 +1,10 @@
 import * as allure from 'allure-js-commons';
+import type { UserRole } from '../types/user-role';
 
 interface AllureMetadataConfig {
-  owner: string;
-  allureId: string;
+  owner?: string;
   backend?: 'mock' | 'real';
-  tags: string[];
+  tags?: string[];
 }
 
 /**
@@ -12,7 +12,6 @@ interface AllureMetadataConfig {
  *
  * @param config Набор метаданных:
  * - owner - владелец теста (сетевое имя)
- * - allureId - id теста в Allure TestOps
  * - backend - использование мока или реального бэкенда
  * - tags - теги (smoke, regression и другие произвольные)
  *
@@ -20,16 +19,19 @@ interface AllureMetadataConfig {
  * ```ts
  * await setAllureMetadata({
  *   owner: 'ozhegovmv',
- *   allureId: '123355',
  *   backend: 'mock',
  *   tags: ['smoke', 'features'],
  * });
  * ```
  */
-export async function setAllureMetadata(config: AllureMetadataConfig): Promise<void> {
-  await allure.owner(config.owner);
-  await allure.allureId(config.allureId);
-  await allure.tags(...config.tags);
+export async function setAllureMetadata(config: AllureMetadataConfig) {
+  if (config.owner) {
+    await allure.owner(config.owner);
+  }
+
+  if (config.tags?.length) {
+    await allure.tags(...config.tags);
+  }
 
   if (config.backend) {
     await allure.label('backend', config.backend);
@@ -52,4 +54,13 @@ export async function setAllureMetadata(config: AllureMetadataConfig): Promise<v
  */
 export async function step<T>(name: string, fn: () => Promise<T>): Promise<T> {
   return allure.step(name, fn);
+}
+
+/**
+ * Добавляет лейбл Allure role в тест.
+ *
+ * @param role Роль пользователя, под которым проходит тест.
+ */
+export async function setAllureRole(role: UserRole) {
+  await allure.label('role', role.toLowerCase());
 }
