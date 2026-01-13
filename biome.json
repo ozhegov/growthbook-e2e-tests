@@ -4,6 +4,7 @@
 		"includes": [
 			"**/*.ts",
 			"**/*.tsx",
+			"**/*.json",
 			"!**/node_modules",
 			"!**/.playwright",
 			"!**/allure-report",
@@ -20,6 +21,12 @@
 			"lineWidth": 100,
 			"semicolons": "always",
 			"quoteStyle": "single"
+		}
+	},
+	"json": {
+		"formatter": {
+			"enabled": true,
+			"indentWidth": 2
 		}
 	},
 	"linter": {
