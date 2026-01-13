@@ -65,7 +65,7 @@ jobs:
         run: |
           echo "🔄 Ожидание готовности GrowthBook API..."
           for i in {1..30}; do
-            if curl -s -f http://localhost:3100/auth/refresh > /dev/null 2>&1; then
+            if curl -s -f -X POST http://localhost:3100/auth/refresh > /dev/null 2>&1; then
               echo "✅ API готов!"
               exit 0
             fi
