@@ -1,0 +1,97 @@
+name: E2E Full Tests (main)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  full:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+
+    env:
+      BASE_URL: http://localhost:3000
+      API_BASE_URL: http://localhost:3100
+      STORAGE_DIR: storage
+      RUN_ID: ${{ github.run_number }}
+
+      ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+      ENGINEER_PASSWORD: ${{ secrets.ENGINEER_PASSWORD }}
+      EXPERIMENTER_PASSWORD: ${{ secrets.EXPERIMENTER_PASSWORD }}
+
+    steps:
+      # Скачивание кода из репозитория
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Настройка Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # Установка npm зависимостей
+      - name: Install dependencies
+        run: npm ci
+
+      # Установка браузеров для Playwright
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      # Линтинг кода (Biome)
+      - name: Lint code
+        run: npm run check
+
+      # Проверка типов TypeScript
+      - name: Type check
+        run: npm run type-check
+
+      # Запуск GrowthBook контейнеров
+      - name: Start GrowthBook
+        run: npm run docker:up
+
+      # Ожидание доступности GrowthBook API
+      - name: Wait for API
+        run: |
+          echo "🔄 Ожидание готовности GrowthBook API..."
+          for i in {1..30}; do
+            if curl -s -f http://localhost:3100/auth/refresh > /dev/null 2>&1; then
+              echo "✅ API готов!"
+              exit 0
+            fi
+            echo "⏳ Попытка $i из 30..."
+            sleep 2
+          done
+          echo "❌ API недоступно"
+          npm run docker:logs
+          exit 1
+
+      # Запуск полного набора тестов
+      - name: Run full test suite
+        run: npm run test
+        continue-on-error: true
+
+      # Загрузка трейсов Playwright
+      - name: Upload Playwright traces
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces-main-${{ github.run_number }}
+          path: test-results
+          retention-days: 30
+
+      # Загрузка результатов Allure
+      - name: Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results-full
+          path: allure-results
+          retention-days: 30
+
+      # Остановка контейнеров GrowthBook с очисткой данных
+      - name: Stop and cleanup Docker
+        if: always()
+        run: npm run docker:reset
