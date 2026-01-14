@@ -60,6 +60,9 @@
 					"level": "error",
 					"fix": "safe"
 				}
+			},
+			"correctness": {
+				"noEmptyPattern": "off"
 			}
 		}
 	},
