@@ -19,7 +19,7 @@ export interface AuthFixtures {
 }
 
 export const authFixture = base.extend<AuthFixtures>({
-  role: async (_, use, testInfo) => {
+  role: async ({}, use, testInfo) => {
     const role = getRoleFromTitle(testInfo.title);
     await setAllureRole(role);
 
