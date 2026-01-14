@@ -59,6 +59,7 @@ jobs:
       # Запуск GrowthBook контейнеров
       - name: Start GrowthBook
         run: npm run docker:up
+        timeout-minutes: 5
 
       # Ожидание доступности GrowthBook API
       - name: Wait for API
