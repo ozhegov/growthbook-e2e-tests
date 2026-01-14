@@ -6,4 +6,8 @@ export class BasePOM {
   constructor(page: Page) {
     this.page = page;
   }
+
+  async open(url: string) {
+    await this.page.goto(url, { waitUntil: 'domcontentloaded' });
+  }
 }
