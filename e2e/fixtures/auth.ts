@@ -13,12 +13,12 @@ import { getRoleFromTitle } from './helpers';
  * и поднимает контекст браузера с соответствующим storageState.
  */
 
-interface AuthFixtures {
+export interface AuthFixtures {
   role: UserRole;
   context: BrowserContext;
 }
 
-export const test = base.extend<AuthFixtures>({
+export const authFixture = base.extend<AuthFixtures>({
   role: async (_, use, testInfo) => {
     const role = getRoleFromTitle(testInfo.title);
     await setAllureRole(role);
