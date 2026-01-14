@@ -46,7 +46,7 @@ jobs:
 
       # Установка браузеров для Playwright
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+        run: npx playwright install chromium --with-deps
 
       # Линтинг кода (Biome)
       - name: Lint code
