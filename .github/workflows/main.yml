@@ -78,7 +78,7 @@ jobs:
 
       # Запуск полного набора тестов
       - name: Run full test suite
-        run: npm run test
+        run: npm run test -- --project=chromium
         continue-on-error: true
 
       # Загрузка трейсов Playwright

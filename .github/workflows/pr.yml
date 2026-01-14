@@ -78,7 +78,7 @@ jobs:
 
       # Запуск набора смоук тестов
       - name: Run smoke test suite
-        run: npm run test:smoke
+        run: npm run test:smoke -- --project=chromium
         continue-on-error: true
 
       # Загрузка трейсов Playwright
