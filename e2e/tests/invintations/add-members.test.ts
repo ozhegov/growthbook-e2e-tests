@@ -4,7 +4,7 @@ import { MEMBERS_PAGE } from '../../constants/pages/members-page';
 import { URLS } from '../../constants/urls';
 import { setAllureMetadata, step } from '../../helpers/allure';
 import { expect, test } from '../../test';
-import type { User } from '../../types/user';
+import type { UserRegistration } from '../../types/user';
 
 test('Пользователь с ролью администратор имеет права добавление членов команды, зарегистрировавшихся не по ссылке-приглашению @allure.id=122001 @role=admin @smoke', async ({
   request,
@@ -16,7 +16,7 @@ test('Пользователь с ролью администратор имее
     tags: ['smoke', 'invite', 'members'],
   });
 
-  const userData: User = {
+  const userData: UserRegistration = {
     email: `uninvited_${RUN_ID}@growthbook.local`,
     password: 'Test123!',
     name: 'Vasya',

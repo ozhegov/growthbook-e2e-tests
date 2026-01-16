@@ -1,6 +1,6 @@
 import type { APIRequestContext } from '@playwright/test';
 import { API_BASE_URL } from '../config';
-import type { User } from '../types/user';
+import type { UserLogin, UserRegistration } from '../types/user';
 import type { AuthResponse } from './types';
 
 /**
@@ -11,7 +11,7 @@ import type { AuthResponse } from './types';
  * @returns AuthResponse из ответа API (например, token и другие поля, если они есть).
  * @throws Error если API вернул неуспешный статус ответа.
  */
-export async function loginUser(req: APIRequestContext, user: User): Promise<AuthResponse> {
+export async function loginUser(req: APIRequestContext, user: UserLogin): Promise<AuthResponse> {
   const res = await req.post(`${API_BASE_URL}/auth/login`, {
     data: { email: user.email, password: user.password },
   });
@@ -35,7 +35,10 @@ export async function loginUser(req: APIRequestContext, user: User): Promise<Aut
  * @throws Error если регистрация не удалась, API вернул 400 с другой ошибкой,
  * или если логин завершился неуспешно.
  */
-export async function registerAdmin(req: APIRequestContext, user: User): Promise<AuthResponse> {
+export async function registerAdmin(
+  req: APIRequestContext,
+  user: UserRegistration,
+): Promise<AuthResponse> {
   const res = await req.post(`${API_BASE_URL}/auth/firsttime`, {
     data: {
       companyname: 'GrowthBook Testing',
@@ -73,7 +76,10 @@ export async function registerAdmin(req: APIRequestContext, user: User): Promise
  * @throws Error если регистрация не удалась, API вернул 400 с другой ошибкой,
  * или если логин завершился неуспешно.
  */
-export async function registerUser(req: APIRequestContext, user: User): Promise<string> {
+export async function registerUser(
+  req: APIRequestContext,
+  user: UserRegistration,
+): Promise<string> {
   const res = await req.post(`${API_BASE_URL}/auth/register`, {
     data: {
       name: user.name,
@@ -85,7 +91,7 @@ export async function registerUser(req: APIRequestContext, user: User): Promise<
   if (res.status() === 400) {
     const { message } = await res.json();
     if (message?.includes('already')) {
-      console.log(`ℹ️ Пользователь с ролью "${user.role}" уже зарегистрирован, логинимся`);
+      console.log(`ℹ️ Пользователь "${user.email}" уже зарегистрирован, логинимся`);
       const { token } = await loginUser(req, user);
       return token;
     }

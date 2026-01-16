@@ -82,7 +82,7 @@ export class MembersPagePOM extends BasePOM {
   }
 
   async open() {
-    await super.open(URLS.SETTINGS_MEMBERS, this.pageHeader);
+    await super.open(URLS.SETTINGS_MEMBERS);
   }
 
   /** Секция Orphaned Users */
