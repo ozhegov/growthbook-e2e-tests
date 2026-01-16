@@ -1,7 +1,6 @@
 import { registerUser } from '../../api/auth';
 import { RUN_ID } from '../../config';
-import { MEMBERS_PAGE } from '../../constants/pages/members-page';
-import { URLS } from '../../constants/urls';
+import { MEMBERS_PAGE, URLS } from '../../constants';
 import { setAllureMetadata, step } from '../../helpers/allure';
 import { expect, test } from '../../test';
 import type { UserRegistration } from '../../types/user';

@@ -1,6 +1,5 @@
 import type { Locator, Page } from '@playwright/test';
-import { MEMBERS_PAGE } from '../../constants/pages/members-page';
-import { URLS } from '../../constants/urls';
+import { MEMBERS_PAGE, URLS } from '../../constants';
 import { expect } from '../../test';
 import type { UserRoleLower } from '../../types/user-role';
 import { BasePOM } from '../base.pom';
@@ -97,7 +96,7 @@ export class MembersPagePOM extends BasePOM {
 
   /** Модальное окно Add user*/
   async selectGlobalRole(role: UserRoleLower) {
-    await super.selectOptionInDropdown(this.globalRoleSelector, this.selectorOptions, role);
+    await this.selectOptionInDropdown(this.globalRoleSelector, this.selectorOptions, role);
   }
 
   async addUser() {

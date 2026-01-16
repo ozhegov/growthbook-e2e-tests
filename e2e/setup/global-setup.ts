@@ -19,7 +19,7 @@ export default async function globalSetup(_: FullConfig) {
     const admin = USERS[0];
 
     const { token: adminToken } = await registerAdmin(adminReq, admin);
-    console.log('\n✅ Администатратор зарегистрирован');
+    console.log('\n✅ Администратор зарегистрирован');
 
     const orgId = await getOrganizationId(adminReq, adminToken);
     console.log('✅ Получен ID организации');
@@ -48,7 +48,12 @@ export default async function globalSetup(_: FullConfig) {
 
       await req.dispose();
     }
-    console.log('✅ Подготовлены пользователи для E2E тестов');
+    console.log('✅ Подготовлены авторизованные пользователи');
+
+    const guestReq = await request.newContext();
+    await saveStorageState(guestReq, 'GUEST');
+    await guestReq.dispose();
+    console.log('✅ Создано состояние сессии для неавторизованного пользователя');
 
     console.log('\n🎉 Настройка проекта завершена\n');
   } catch (err) {

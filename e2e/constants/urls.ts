@@ -1,4 +1,4 @@
 export const URLS = {
-  // Settings
+  WELCOME_PAGE: '/',
   SETTINGS_MEMBERS: '/settings/team#members',
 };
