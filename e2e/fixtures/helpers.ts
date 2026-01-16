@@ -1,7 +1,7 @@
 import type { UserRole } from '../types/user-role';
 
 const DEFAULT_ROLE: UserRole = 'ADMIN';
-const ALLOWED_ROLES = new Set<UserRole>(['ADMIN', 'ENGINEER', 'EXPERIMENTER']);
+const ALLOWED_ROLES = new Set<UserRole>(['ADMIN', 'ENGINEER', 'EXPERIMENTER', 'GUEST']);
 
 /**
  * Определение роли пользователя на основе тега `@role=...` в названии теста.
