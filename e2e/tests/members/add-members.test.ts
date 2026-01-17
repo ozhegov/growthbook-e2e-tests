@@ -1,13 +1,13 @@
 import { registerUser } from '../../api/auth';
-import { RUN_ID } from '../../config';
 import { MEMBERS_PAGE, URLS } from '../../constants';
+import { createUserForRegistration } from '../../factories';
 import { setAllureMetadata, step } from '../../helpers/allure';
 import { expect, test } from '../../test';
-import type { UserRegistration } from '../../types/user';
 
-test('Пользователь с ролью администратор имеет права добавление членов команды, зарегистрировавшихся не по ссылке-приглашению @allure.id=122001 @role=admin @smoke', async ({
+test('Пользователь с ролью администратор имеет права добавление членов команды, зарегистрировавшихся не по ссылке-приглашению @allure.id=122000 @role=admin @smoke', async ({
   request,
   membersPagePOM,
+  faker,
 }) => {
   await setAllureMetadata({
     owner: 'ozhegovmv',
@@ -15,16 +15,12 @@ test('Пользователь с ролью администратор имее
     tags: ['smoke', 'invite', 'members'],
   });
 
-  const userData: UserRegistration = {
-    email: `uninvited_${RUN_ID}@growthbook.local`,
-    password: 'Test123!',
-    name: 'Vasya',
-  };
+  const user = createUserForRegistration(faker);
 
   await step(
-    `Зарегистрировать пользователя "${userData.email}" по API без приглашения от администратора`,
+    `Зарегистрировать пользователя "${user.email}" по API без приглашения от администратора`,
     async () => {
-      await registerUser(request, userData);
+      await registerUser(request, user);
     },
   );
   await step(
@@ -34,9 +30,9 @@ test('Пользователь с ролью администратор имее
     },
   );
   await step(
-    `В секции "${MEMBERS_PAGE.SECTIONS.ORPHANED_USERS}" нажать на иконку дополнительных действий у пользователя "${userData.email}"`,
+    `В секции "${MEMBERS_PAGE.SECTIONS.ORPHANED_USERS}" нажать на иконку дополнительных действий у пользователя "${user.email}"`,
     async () => {
-      await membersPagePOM.openOrphanedUsersActionMenu(userData.email);
+      await membersPagePOM.openOrphanedUsersActionMenu(user.email);
     },
   );
   await step(
@@ -58,9 +54,9 @@ test('Пользователь с ролью администратор имее
     },
   );
   await step(
-    `В секции "${MEMBERS_PAGE.SECTIONS.ACTIVE_MEMBERS}" отображается ранее добавленный пользователь "${userData.email}"`,
+    `В секции "${MEMBERS_PAGE.SECTIONS.ACTIVE_MEMBERS}" отображается ранее добавленный пользователь "${user.email}"`,
     async () => {
-      await expect(membersPagePOM.activeMembersTable).toContainText(userData.email);
+      await expect(membersPagePOM.activeMembersTable).toContainText(user.email);
     },
   );
 });

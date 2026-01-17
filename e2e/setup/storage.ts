@@ -1,7 +1,7 @@
 import path from 'node:path';
 import type { APIRequestContext } from '@playwright/test';
 import { STORAGE_DIR } from '../config';
-import type { UserRole } from '../types/user-role';
+import type { UserRoleApi } from '../types/user-role';
 
 /**
  * Сохраняет состояние сессии (storage state) из APIRequestContext в JSON-файл,
@@ -16,7 +16,7 @@ import type { UserRole } from '../types/user-role';
  * @param req - APIRequestContext, в котором выполнены запросы, установившие сессию.
  * @param role - роль пользователя.
  */
-export async function saveStorageState(req: APIRequestContext, role: UserRole) {
+export async function saveStorageState(req: APIRequestContext, role: UserRoleApi) {
   const file = path.join(STORAGE_DIR, `${role.toLowerCase()}-state.json`);
   await req.storageState({ path: file });
 }

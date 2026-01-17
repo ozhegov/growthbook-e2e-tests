@@ -1,3 +1,3 @@
-export type UserRole = 'ADMIN' | 'ENGINEER' | 'EXPERIMENTER' | 'GUEST';
+export type UserRoleApi = 'ADMIN' | 'ENGINEER' | 'EXPERIMENTER' | 'GUEST';
 
-export type UserRoleLower = Lowercase<UserRole>;
+export type UserRoleTest = Lowercase<UserRoleApi>;
