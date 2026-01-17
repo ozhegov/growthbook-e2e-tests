@@ -1,10 +1,9 @@
-import { RUN_ID } from '../../config';
 import { ERROR_MESSAGES, URLS, WELCOME_PAGE } from '../../constants';
+import { createUserForRegistration } from '../../factories';
 import { setAllureMetadata, step } from '../../helpers/allure';
 import { expect, test } from '../../test';
-import type { UserRegistration } from '../../types/user';
 
-test('Пользователь с ролью отличной от администратора не имеет доступ к странице участников в настройках @allure.id=122000 @role=engineer @smoke', async ({
+test('Пользователь с ролью отличной от администратора не имеет доступ к странице участников в настройках @allure.id=122003 @role=engineer @smoke', async ({
   membersPagePOM,
   errorAlertPOM,
 }) => {
@@ -29,9 +28,10 @@ test('Пользователь с ролью отличной от админи�
   });
 });
 
-test('Пользователь без приглашения администратора не может завершить регистрацию @allure.id=122000 @role=guest @smoke', async ({
+test('Пользователь без приглашения администратора не может завершить регистрацию @allure.id=122001 @role=guest @smoke', async ({
   welcomePagePOM,
   errorAlertPOM,
+  faker,
 }) => {
   await setAllureMetadata({
     owner: 'ozhegovmv',
@@ -39,11 +39,7 @@ test('Пользователь без приглашения администр�
     tags: ['smoke', 'access', 'welcome_page'],
   });
 
-  const userData: UserRegistration = {
-    email: `uninvited_${RUN_ID}@growthbook.local`,
-    password: 'Test123!',
-    name: 'Vasya',
-  };
+  const user = createUserForRegistration(faker);
 
   await step(
     'На главной странице неавторизованным пользователем нажать на ссылку для регистрации',
@@ -55,11 +51,11 @@ test('Пользователь без приглашения администр�
 
   await step(
     `Заполнить регистрационную форму:
-    - поле "${WELCOME_PAGE.INPUTS.NAME}": "${userData.name}",
-    - поле "${WELCOME_PAGE.INPUTS.EMAIL}": "${userData.email}",
-    - поле "${WELCOME_PAGE.INPUTS.PASSWORD}": "${userData.password}"`,
+    - поле "${WELCOME_PAGE.INPUTS.NAME}": "${user.name}",
+    - поле "${WELCOME_PAGE.INPUTS.EMAIL}": "${user.email}",
+    - поле "${WELCOME_PAGE.INPUTS.PASSWORD}": "${user.password}"`,
     async () => {
-      await welcomePagePOM.fillRegistrationForm(userData);
+      await welcomePagePOM.fillRegistrationForm(user);
     },
   );
 
@@ -68,7 +64,7 @@ test('Пользователь без приглашения администр�
   });
 
   await step(
-    `Отображается сообщение об ошибке- "${ERROR_MESSAGES.INVITATION_REQUIRED}"`,
+    `Отображается сообщение об ошибке - "${ERROR_MESSAGES.INVITATION_REQUIRED}"`,
     async () => {
       await expect(errorAlertPOM.alert).toHaveText(ERROR_MESSAGES.INVITATION_REQUIRED);
     },

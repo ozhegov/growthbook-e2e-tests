@@ -1,6 +1,6 @@
 import type { APIRequestContext } from '@playwright/test';
 import { API_BASE_URL } from '../config';
-import type { UserInvitation } from '../types/user';
+import type { UserInvitationApi } from '../types/user';
 
 /**
  * Приглашение пользователя админом в организацию через GrowthBook API.
@@ -15,7 +15,7 @@ import type { UserInvitation } from '../types/user';
 export async function inviteUser(
   req: APIRequestContext,
   adminToken: string,
-  user: UserInvitation,
+  user: UserInvitationApi,
   orgId: string,
 ): Promise<string> {
   const res = await req.post(`${API_BASE_URL}/invite`, {

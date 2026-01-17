@@ -1,5 +1,5 @@
 import * as allure from 'allure-js-commons';
-import type { UserRole } from '../types/user-role';
+import type { UserRoleApi } from '../types/user-role';
 
 interface AllureMetadataConfig {
   owner?: string;
@@ -57,10 +57,19 @@ export async function step<T>(name: string, fn: () => Promise<T>): Promise<T> {
 }
 
 /**
- * Добавляет лейбл Allure role в тест.
+ * Добавляет параметр Allure role в тест.
  *
  * @param role Роль пользователя, под которым проходит тест.
  */
-export async function setAllureRole(role: UserRole) {
-  await allure.label('role', role.toLowerCase());
+export async function setAllureRole(role: UserRoleApi) {
+  await allure.parameter('role', role.toLowerCase());
+}
+
+/**
+ * Добавляет параметр Allure seed в тест.
+ *
+ * @param seed Faker seed для тестовых данных.
+ */
+export async function setAllureSeed(seed: number) {
+  await allure.parameter('seed', String(seed));
 }

@@ -3,7 +3,7 @@ import path from 'node:path';
 import { type BrowserContext, test as base } from '@playwright/test';
 import { STORAGE_DIR } from '../config';
 import { setAllureRole } from '../helpers/allure';
-import type { UserRole } from '../types/user-role';
+import type { UserRoleApi } from '../types/user-role';
 import { getRoleFromTitle } from './helpers';
 
 /**
@@ -14,7 +14,7 @@ import { getRoleFromTitle } from './helpers';
  */
 
 export interface AuthFixtures {
-  role: UserRole;
+  role: UserRoleApi;
   context: BrowserContext;
 }
 
