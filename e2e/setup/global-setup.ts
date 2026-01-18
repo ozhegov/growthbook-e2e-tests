@@ -22,6 +22,7 @@ export default async function globalSetup(_: FullConfig) {
     console.log('\n✅ Администратор зарегистрирован');
 
     const orgId = await getOrganizationId(adminReq, adminToken);
+    process.env.E2E_ORG_ID = orgId;
     console.log('✅ Получен ID организации');
 
     await saveStorageState(adminReq, 'ADMIN');
