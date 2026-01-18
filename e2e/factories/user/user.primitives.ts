@@ -14,7 +14,7 @@ export const getUserName = (faker: Faker): string => {
  */
 export const getUserEmail = (faker: Faker): string => {
   const name = faker.person.firstName().toLowerCase();
-  const suffix = faker.string.alphanumeric(3).toLowerCase();
+  const suffix = faker.string.alphanumeric({ length: 8, casing: 'lower' });
 
   return `${name}.${suffix}@growthbook.local`;
 };
