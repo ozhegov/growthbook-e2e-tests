@@ -14,6 +14,8 @@ export class MembersPagePOM extends BasePOM {
   readonly activeMembersBlockHeader: Locator;
   readonly activeMembersSection: Locator;
   readonly activeMembersTable: Locator;
+  readonly activeMembersActionButton: (userData: string) => Locator;
+  readonly removeUserButton: Locator;
 
   /** Секция Orphaned Users */
   readonly orphanedUsersSection: Locator;
@@ -28,6 +30,11 @@ export class MembersPagePOM extends BasePOM {
   readonly globalRoleSelector: Locator;
   readonly selectorOptions: Locator;
   readonly addButton: Locator;
+
+  /** Модальное окно Delete user*/
+  readonly deleteUserModal: Locator;
+  readonly deleteUserModalHeader: Locator;
+  readonly deleteButton: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -44,6 +51,13 @@ export class MembersPagePOM extends BasePOM {
       has: this.activeMembersBlockHeader,
     });
     this.activeMembersTable = this.activeMembersSection.getByRole('table').first();
+    this.activeMembersActionButton = (userData: string) =>
+      this.activeMembersTable
+        .locator('tr', { has: this.page.getByText(userData) })
+        .locator('a.text-dark');
+    this.removeUserButton = this.page.getByRole('link', {
+      name: MEMBERS_PAGE.BUTTONS.REMOVE_USER,
+    });
 
     /** Секция Orphaned Users */
     this.orphanedUsersBlockHeader = this.root.getByRole('heading', {
@@ -63,7 +77,7 @@ export class MembersPagePOM extends BasePOM {
 
     /** Модальное окно Add user*/
     this.addUserModalHeader = this.page.getByRole('heading', {
-      name: MEMBERS_PAGE.MODAL.ADD_USER,
+      name: MEMBERS_PAGE.MODALS.ADD_USER,
     });
     this.addUserModal = this.page.locator('div.modal-content', {
       has: this.addUserModalHeader,
@@ -78,10 +92,31 @@ export class MembersPagePOM extends BasePOM {
       name: MEMBERS_PAGE.BUTTONS.ADD_USER,
       exact: true,
     });
+
+    /** Модальное окно Delete user*/
+    this.deleteUserModalHeader = this.page.getByRole('heading', {
+      name: MEMBERS_PAGE.MODALS.DELETE_USER,
+    });
+    this.deleteUserModal = this.page.locator('form', {
+      has: this.deleteUserModalHeader,
+    });
+    this.deleteButton = this.deleteUserModal.getByRole('button', {
+      name: MEMBERS_PAGE.BUTTONS.DELETE,
+    });
   }
 
   async open() {
     await super.open(URLS.SETTINGS_MEMBERS);
+  }
+
+  /** Секция Active Members */
+  async openActiveMembersActionMenu(userData: string) {
+    await this.activeMembersActionButton(userData).click();
+  }
+
+  async openDeleteUserModal() {
+    await this.removeUserButton.click();
+    await expect(this.deleteUserModal).toBeVisible();
   }
 
   /** Секция Orphaned Users */
@@ -101,5 +136,10 @@ export class MembersPagePOM extends BasePOM {
 
   async addUser() {
     await this.addButton.click();
+  }
+
+  /** Модальное окно Delete user*/
+  async deleteUser() {
+    await this.deleteButton.click();
   }
 }

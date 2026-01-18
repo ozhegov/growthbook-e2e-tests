@@ -4,12 +4,15 @@ export const MEMBERS_PAGE = {
     ORPHANED_USERS: 'Orphaned Users',
     ACTIVE_MEMBERS: 'Active Members',
   },
-  MODAL: {
+  MODALS: {
     ADD_USER: 'Add User',
+    DELETE_USER: 'Delete',
   },
   BUTTONS: {
     ADD_BACK_TO_ACCOUNT: 'Add back to account',
     ADD_USER: 'Add',
+    REMOVE_USER: 'Remove User',
+    DELETE: 'Delete',
   },
   DROPDOWNS: {
     GLOBAL_ROLE: {

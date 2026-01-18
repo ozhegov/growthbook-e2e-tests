@@ -1,11 +1,10 @@
-import { registerUser } from '../../api/auth';
+import { createUserApiContext, registerUser } from '../../api';
 import { MEMBERS_PAGE, URLS } from '../../constants';
 import { createUserForRegistration } from '../../factories';
 import { setAllureMetadata, step } from '../../helpers/allure';
 import { expect, test } from '../../test';
 
 test('Пользователь с ролью администратор имеет права добавление членов команды, зарегистрировавшихся не по ссылке-приглашению @allure.id=122000 @role=admin @smoke', async ({
-  request,
   membersPagePOM,
   faker,
 }) => {
@@ -20,7 +19,9 @@ test('Пользователь с ролью администратор имее
   await step(
     `Зарегистрировать пользователя "${user.email}" по API без приглашения от администратора`,
     async () => {
-      await registerUser(request, user);
+      const guestReq = await createUserApiContext('GUEST');
+      await registerUser(guestReq, user);
+      await guestReq.dispose();
     },
   );
   await step(
@@ -36,7 +37,7 @@ test('Пользователь с ролью администратор имее
     },
   );
   await step(
-    `Открыть модальное окно "${MEMBERS_PAGE.MODAL.ADD_USER}" нажав на кнопку "${MEMBERS_PAGE.BUTTONS.ADD_BACK_TO_ACCOUNT}"`,
+    `Открыть модальное окно "${MEMBERS_PAGE.MODALS.ADD_USER}" нажав на кнопку "${MEMBERS_PAGE.BUTTONS.ADD_BACK_TO_ACCOUNT}"`,
     async () => {
       await membersPagePOM.openAddUserModal();
     },

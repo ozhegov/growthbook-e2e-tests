@@ -28,7 +28,8 @@ export const fakerFixture = base.extend<FakerFixture>({
       testInfo.workerIndex * 1_000_000 +
       testInfo.retry * 10_000 +
       testInfo.repeatEachIndex * 100 +
-      allureId;
+      allureId +
+      Math.floor(Math.random() * 1000);
 
     faker.seed(seed);
 
