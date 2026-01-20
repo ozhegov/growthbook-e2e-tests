@@ -1,0 +1,26 @@
+export const definitionsFixture = {
+  status: 200,
+  metrics: [],
+  datasources: [],
+  dimensions: [],
+  segments: [],
+  metricGroups: [],
+  tags: [],
+  savedGroups: [],
+  customFields: [],
+  projects: [
+    {
+      id: 'prj_4mock',
+      name: 'My Mock Project',
+      description: '',
+      settings: {},
+      organization: 'org_mock',
+      dateCreated: new Date().toISOString(),
+      dateUpdated: new Date().toISOString(),
+    },
+  ],
+  factTables: [],
+  factMetrics: [],
+  decisionCriteria: [],
+  webhookSecrets: [],
+};
