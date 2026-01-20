@@ -40,3 +40,15 @@ export function getAllureIdFromTitle(title: string): number {
 
   return match ? Number(match[1]) : 0;
 }
+
+/**
+ * Определяет, является ли тест mock-тестом по тегу `@mock`
+ *
+ * Используется для запуска MSW.
+ *
+ * @param title - название теста
+ * @returns boolean
+ */
+export function isMockTest(title: string): boolean {
+  return /@mock\b/i.test(title);
+}
