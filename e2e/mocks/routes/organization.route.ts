@@ -1,5 +1,5 @@
 import type { Route } from '@playwright/test';
-import { organizationFixture } from '../fixtures';
+import { createOrganization } from '../fixtures';
 
 /**
  * Route handler для mock-запроса организации.
@@ -16,7 +16,7 @@ export function organizationRouteHandler() {
       return route.fulfill({
         status: 200,
         contentType: 'application/json',
-        body: JSON.stringify(organizationFixture),
+        body: JSON.stringify(createOrganization()),
       });
     }
 

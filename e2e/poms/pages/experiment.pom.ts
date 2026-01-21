@@ -10,6 +10,7 @@ export class ExperimentPagePOM extends BasePOM {
   readonly makeChangesButton: Locator;
   readonly stopExperimentButton: Locator;
   readonly actionButton: Locator;
+  readonly startExperimentButton: Locator;
 
   /** Дополнительное меню */
   readonly actionMenu: Locator;
@@ -17,6 +18,11 @@ export class ExperimentPagePOM extends BasePOM {
   readonly editInfoButton: Locator;
   readonly editPhaseButton: Locator;
   readonly auditLogButton: Locator;
+
+  /** Модальное окно Start Experiment*/
+  readonly startExperimentModal: Locator;
+  readonly startExperimentModalHeader: Locator;
+  readonly startNowButton: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -31,7 +37,10 @@ export class ExperimentPagePOM extends BasePOM {
     this.stopExperimentButton = this.root.getByRole('button', {
       name: EXPERIMENT_PAGE.BUTTONS.STOP_EXPERIMENT,
     });
-    this.actionButton = this.root.locator('button[aria-haspopup="menu"]');
+    this.actionButton = this.root.locator('button[aria-haspopup="menu"]').first();
+    this.startExperimentButton = this.root.getByRole('button', {
+      name: EXPERIMENT_PAGE.BUTTONS.START_EXPERIMENT,
+    });
 
     /** Дополнительное меню */
     this.actionMenu = this.page.getByRole('menu');
@@ -47,14 +56,39 @@ export class ExperimentPagePOM extends BasePOM {
     this.auditLogButton = this.actionMenu.getByRole('menuitem', {
       name: EXPERIMENT_PAGE.BUTTONS.AUDIT_LOG,
     });
+
+    /** Модальное окно Start Experiment*/
+    this.startExperimentModalHeader = this.page.getByRole('heading', {
+      name: EXPERIMENT_PAGE.MODALS.START_EXPERIMENT,
+    });
+    this.startExperimentModal = this.page.locator('div.modal-content', {
+      has: this.startExperimentModalHeader,
+    });
+    this.startNowButton = this.startExperimentModal.getByRole('button', {
+      name: EXPERIMENT_PAGE.BUTTONS.START_NOW,
+    });
   }
 
   async open(experimentId: string) {
     await super.open(URLS.EXPERIMENT_PAGE(experimentId));
   }
 
+  /** Верхнее меню */
+  async startExperiment() {
+    this.startExperimentButton.click();
+  }
+
   /** Дополнительное меню */
   async openActionMenu() {
     await this.actionButton.click();
   }
+
+  /** Модальное окно Start Experiment*/
+  async clickStartNowButton() {
+    await this.startNowButton.click();
+  }
+
+  // async clickStartButton() {
+  //   await this.startButton.click();
+  // }
 }
