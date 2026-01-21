@@ -3,21 +3,14 @@ import { experiments } from '../fixtures/experiment/scenarios';
 import { currentExperiment } from '../fixtures/experiment/state';
 
 /**
- * Route handler для mock-экспериментов.
+ * Route handler для mock-запросов экспериментов.
  *
  * Используется только в тестах с включённым mock-режимом.
- * Перехватывает API-запросы, связанные с экспериментом, включая:
+ * Перехватывает HTTP-запросы, связанные с экспериментами,
+ * и возвращает детерминированные mock-ответы.
  *
- * - GET    /experiment/:id
- * - GET    /experiment/:id/watchers
- * - GET    /experiment/:id/snapshot/:index
- * - GET    /experiment/:id/incremental-refresh
- * - GET    /experiment/:id/reports
- * - POST   /experiment/:id/status
- * - POST   /experiment/:id/stop
- *
- * Состояние эксперимента хранится в `currentExperiment`
- * и может изменяться в процессе теста.
+ * Состояние текущего эксперимента хранится в `currentExperiment`
+ * и может изменяться во время выполнения теста.
  */
 export function experimentRouteHandler() {
   return async (route: Route) => {
@@ -58,7 +51,84 @@ export function experimentRouteHandler() {
           experiment: currentExperiment,
           visualChangesets: [],
           urlRedirects: [],
-          linkedFeatures: [],
+          linkedFeatures: [
+            {
+              feature: {
+                id: 'mock_feature',
+                archived: false,
+                description: '',
+                organization: 'org_405opf1omkmv6g3w',
+                owner: '',
+                project: '',
+                dateCreated: '2026-01-20T20:06:16.712Z',
+                dateUpdated: '2026-01-20T20:06:16.712Z',
+                version: 1,
+                valueType: 'boolean',
+                defaultValue: 'false',
+                tags: [],
+                environmentSettings: {
+                  production: {
+                    enabled: true,
+                    rules: [
+                      {
+                        type: 'experiment-ref',
+                        description: '',
+                        id: 'fr_405opf1omkn0y8w8',
+                        condition: '',
+                        enabled: true,
+                        scheduleRules: [],
+                        experimentId: 'exp_405opf1omkn0vgeq',
+                        variations: [
+                          {
+                            value: 'true',
+                            variationId: 'var_mkn0uvrn',
+                          },
+                          {
+                            value: 'false',
+                            variationId: 'var_mkn0uvrm',
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  dev: {
+                    rules: [],
+                    enabled: false,
+                  },
+                },
+                hasDrafts: false,
+                linkedExperiments: ['exp_405opf1omkn0vgeq'],
+                jsonSchema: {
+                  schemaType: 'schema',
+                  simple: {
+                    type: 'object',
+                    fields: [],
+                  },
+                  schema: '',
+                  date: '2026-01-20T20:06:16.712Z',
+                  enabled: false,
+                },
+                prerequisites: [],
+              },
+              state: 'live',
+              environmentStates: {
+                production: 'active',
+              },
+              values: [
+                {
+                  value: 'true',
+                  variationId: 'var_mkn0uvrn',
+                },
+                {
+                  value: 'false',
+                  variationId: 'var_mkn0uvrm',
+                },
+              ],
+              valuesFrom: 'production',
+              rulesAbove: false,
+              inconsistentValues: false,
+            },
+          ],
           envs: [],
         }),
       });
@@ -113,12 +183,29 @@ export function experimentRouteHandler() {
       });
     }
 
+    // GET /experiment/:id/launch-checklist
+    if (method === 'GET' && pathname.endsWith('/launch-checklist')) {
+      return route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          status: 200,
+          checklist: [],
+        }),
+      });
+    }
+
     // POST /experiment/:id/status
     if (method === 'POST' && pathname.endsWith('/status')) {
       const body = req.postDataJSON() as { status: 'running' };
 
       if (body.status === 'running') {
-        Object.assign(currentExperiment, experiments.running);
+        Object.assign(currentExperiment, {
+          status: 'running',
+          archived: false,
+          phases: experiments.running.phases,
+          releasedVariationId: '',
+        });
       }
 
       return route.fulfill({

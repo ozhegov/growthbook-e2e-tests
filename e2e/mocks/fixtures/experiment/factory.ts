@@ -74,7 +74,7 @@ export function createExperiment({ id, status }: { id: string; status: Experimen
       },
     ],
     phases:
-      status === 'running'
+      status === 'running' || status === 'draft'
         ? [
             {
               dateStarted: new Date().toISOString(),
@@ -101,7 +101,7 @@ export function createExperiment({ id, status }: { id: string; status: Experimen
     autoSnapshots: true,
     ideaSource: '',
     regressionAdjustmentEnabled: false,
-    linkedFeatures: [],
+    linkedFeatures: ['mock_feature'],
     sequentialTestingEnabled: false,
     sequentialTestingTuningParameter: 5000,
     type: 'standard',
