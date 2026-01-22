@@ -14,11 +14,11 @@ export const experiments = {
 
   stoppedWon: {
     ...createExperiment({
-      id: EXPERIMENT_IDS.STOPPED_WON,
+      id: EXPERIMENT_IDS.RUNNING,
       status: EXPERIMENT_STATUS.STOPPED,
     }),
-    result: 'won',
+    results: 'won',
+    winner: 1,
     releasedVariationId: 'var_control',
-    summaryText: '"Control" was rolled out to 100%',
   },
 };
