@@ -28,7 +28,10 @@ export function experimentRouteHandler() {
       return route.continue();
     }
 
-    const experimentId = pathname.split('/experiment/')[1]?.split('/')[0];
+    const controlVariationId = currentExperiment.variations[0].id;
+    const variation1Id = currentExperiment.variations[1].id;
+
+    const experimentId = currentExperiment.id;
 
     // GET /experiment/:id
     if (method === 'GET' && experimentId && pathname === `/experiment/${experimentId}`) {
@@ -57,11 +60,11 @@ export function experimentRouteHandler() {
                 id: 'mock_feature',
                 archived: false,
                 description: '',
-                organization: 'org_405opf1omkmv6g3w',
+                organization: 'org_mock',
                 owner: '',
                 project: '',
-                dateCreated: '2026-01-20T20:06:16.712Z',
-                dateUpdated: '2026-01-20T20:06:16.712Z',
+                dateCreated: new Date().toISOString(),
+                dateUpdated: new Date().toISOString(),
                 version: 1,
                 valueType: 'boolean',
                 defaultValue: 'false',
@@ -73,19 +76,19 @@ export function experimentRouteHandler() {
                       {
                         type: 'experiment-ref',
                         description: '',
-                        id: 'fr_405opf1omkn0y8w8',
+                        id: 'fr_mock',
                         condition: '',
                         enabled: true,
                         scheduleRules: [],
-                        experimentId: 'exp_405opf1omkn0vgeq',
+                        experimentId,
                         variations: [
                           {
                             value: 'true',
-                            variationId: 'var_mkn0uvrn',
+                            variationId: variation1Id,
                           },
                           {
                             value: 'false',
-                            variationId: 'var_mkn0uvrm',
+                            variationId: controlVariationId, // ✅ совпадает
                           },
                         ],
                       },
@@ -97,7 +100,7 @@ export function experimentRouteHandler() {
                   },
                 },
                 hasDrafts: false,
-                linkedExperiments: ['exp_405opf1omkn0vgeq'],
+                linkedExperiments: [experimentId], // ✅ совпадает
                 jsonSchema: {
                   schemaType: 'schema',
                   simple: {
@@ -105,7 +108,7 @@ export function experimentRouteHandler() {
                     fields: [],
                   },
                   schema: '',
-                  date: '2026-01-20T20:06:16.712Z',
+                  date: new Date().toISOString(),
                   enabled: false,
                 },
                 prerequisites: [],
@@ -117,11 +120,11 @@ export function experimentRouteHandler() {
               values: [
                 {
                   value: 'true',
-                  variationId: 'var_mkn0uvrn',
+                  variationId: variation1Id, // ✅ совпадает
                 },
                 {
                   value: 'false',
-                  variationId: 'var_mkn0uvrm',
+                  variationId: controlVariationId, // ✅ совпадает
                 },
               ],
               valuesFrom: 'production',
