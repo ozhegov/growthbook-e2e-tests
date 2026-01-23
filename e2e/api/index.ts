@@ -1,6 +1,7 @@
 export * from './auth';
 export * from './auth-token';
 export * from './context';
+export * from './feature';
 export * from './growthbook-api';
 export * from './invites';
 export * from './organizations';
