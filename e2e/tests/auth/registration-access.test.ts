@@ -23,7 +23,7 @@ test('Пользователь с ролью отличной от админи�
     });
 
     await step(`Отображается сообщение об ошибке - "${ERROR_MESSAGES.NO_ACCESS}"`, async () => {
-      await expect(errorAlertPOM.alert).toHaveText(ERROR_MESSAGES.NO_ACCESS);
+      await expect(errorAlertPOM.dangerAlert).toHaveText(ERROR_MESSAGES.NO_ACCESS);
     });
   });
 });
@@ -66,7 +66,7 @@ test('Пользователь без приглашения администр�
   await step(
     `Отображается сообщение об ошибке - "${ERROR_MESSAGES.INVITATION_REQUIRED}"`,
     async () => {
-      await expect(errorAlertPOM.alert).toHaveText(ERROR_MESSAGES.INVITATION_REQUIRED);
+      await expect(errorAlertPOM.dangerAlert).toHaveText(ERROR_MESSAGES.INVITATION_REQUIRED);
     },
   );
 });

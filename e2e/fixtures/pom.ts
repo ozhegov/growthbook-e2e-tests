@@ -1,5 +1,11 @@
 import { test as base } from '@playwright/test';
-import { ErrorAlertPOM, ExperimentPagePOM, MembersPagePOM, WelcomePagePOM } from '../poms';
+import {
+  ErrorAlertPOM,
+  ExperimentPagePOM,
+  FeaturePagePOM,
+  MembersPagePOM,
+  WelcomePagePOM,
+} from '../poms';
 
 /**
  * Фикстура Page Object Models (POM).
@@ -12,6 +18,7 @@ export interface PomFixtures {
   errorAlertPOM: ErrorAlertPOM;
   welcomePagePOM: WelcomePagePOM;
   experimentPagePOM: ExperimentPagePOM;
+  featurePagePOM: FeaturePagePOM;
 }
 
 export const pomFixture = base.extend<PomFixtures>({
@@ -19,4 +26,5 @@ export const pomFixture = base.extend<PomFixtures>({
   errorAlertPOM: async ({ page }, use) => use(new ErrorAlertPOM(page)),
   welcomePagePOM: async ({ page }, use) => use(new WelcomePagePOM(page)),
   experimentPagePOM: async ({ page }, use) => use(new ExperimentPagePOM(page)),
+  featurePagePOM: async ({ page }, use) => use(new FeaturePagePOM(page)),
 });
