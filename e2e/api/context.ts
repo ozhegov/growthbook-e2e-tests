@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { type APIRequestContext, request } from '@playwright/test';
 import { STORAGE_DIR } from '../config';
+import { get } from '../storage/storage.manager';
 import type { UserRoleApi } from '../types/user-role';
 import { getAuthToken } from './auth-token';
 
@@ -23,15 +24,12 @@ export async function createUserApiContext(role: UserRoleApi): Promise<APIReques
   const storage = JSON.parse(await readFile(storagePath, 'utf-8'));
 
   const token = getAuthToken(storage);
-
-  if (!process.env.E2E_ORG_ID) {
-    throw new Error('Переменная окружения "E2E_ORG_ID" отсутствует');
-  }
+  const orgId = await get('orgId');
 
   return request.newContext({
     extraHTTPHeaders: {
       Authorization: `Bearer ${token}`,
-      'X-Organization': process.env.E2E_ORG_ID,
+      'X-Organization': orgId,
     },
   });
 }
