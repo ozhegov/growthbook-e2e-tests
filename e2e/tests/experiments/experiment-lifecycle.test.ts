@@ -50,7 +50,7 @@ test('Старт нового эксперимента @allure.id=122011 @role=e
   });
 });
 
-test('Остановка эксперимента с выводом "Won" @allure.id=122012 @role=experimenter @regression @smoke @mock', async ({
+test('Остановка эксперимента с выводом "Won" @allure.id=122012 @role=experimenter @regression @mock', async ({
   experimentPagePOM,
 }) => {
   await setAllureMetadata({

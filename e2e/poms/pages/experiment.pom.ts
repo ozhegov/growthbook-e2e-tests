@@ -132,7 +132,7 @@ export class ExperimentPagePOM extends BasePOM {
 
   /** Дополнительное меню */
   async openActionMenu() {
-    await this.actionButton.click();
+    await super.openActionMenu(this.actionButton);
   }
 
   /** Модальное окно Start Experiment*/

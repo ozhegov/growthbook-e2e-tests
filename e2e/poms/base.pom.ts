@@ -21,4 +21,8 @@ export class BasePOM {
     await input.fill(value);
     await expect(input).toHaveValue(value);
   }
+
+  async openActionMenu(selector: Locator) {
+    await selector.click();
+  }
 }

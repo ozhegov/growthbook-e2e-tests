@@ -3,6 +3,7 @@ import { registerAdmin, registerUser } from '../api/auth';
 import { createApiKey, createSdkConnection } from '../api/growthbook-api';
 import { acceptInviteWithRetry, inviteUser } from '../api/invites';
 import { getOrganizationId } from '../api/organizations';
+import { set } from '../storage/storage.manager';
 import { DEFAULT_SDK_CONNECTION_CONFIG } from '../test-data/sdk-connection-config';
 import { USERS } from '../test-data/users';
 import { waitForApi } from './health';
@@ -22,8 +23,8 @@ export default async function globalSetup(_: FullConfig) {
     console.log('\n✅ Администратор зарегистрирован');
 
     const orgId = await getOrganizationId(adminReq, adminToken);
-    process.env.E2E_ORG_ID = orgId;
-    console.log('✅ Получен ID организации');
+    await set('orgId', orgId);
+    console.log('✅ Получен и сохранен ID организации');
 
     await saveStorageState(adminReq, 'ADMIN');
 
@@ -31,7 +32,7 @@ export default async function globalSetup(_: FullConfig) {
       description: 'Секретный API ключ для E2E тестов',
       type: 'admin',
     });
-    process.env.GROWTHBOOK_API_KEY = secretKey;
+    await set('apiKey', secretKey);
     console.log('✅ Получен и сохранен API ключ администратора');
 
     await createSdkConnection(adminReq, secretKey, DEFAULT_SDK_CONNECTION_CONFIG);

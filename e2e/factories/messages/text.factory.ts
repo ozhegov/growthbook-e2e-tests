@@ -6,6 +6,13 @@ export interface TextboxOptions {
   multiline?: boolean;
 }
 
+/**
+ * Генерирует случайный текст приблизительной длины.
+ *
+ * Длина текста рассчитывается на основе количества слов,
+ * поэтому фактическая длина строки может отличаться от заданных границ.
+ */
+
 export function getText(
   faker: Faker,
   { minLength = 10, maxLength = 50, multiline = false }: TextboxOptions = {},
