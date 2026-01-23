@@ -3,7 +3,7 @@ import type { UserInvitationApi, UserRegistration } from '../../types/user';
 import { getUserEmail, getUserName, getUserPassword, getUserRole } from './user.primitives';
 
 /**
- * Создает объект с данными пользователя необходимыми для регистрации,
+ * Генерирует объект с данными пользователя необходимыми для регистрации,
  * необходимыми для регистрации через UI или API.
  *
  * @param faker
