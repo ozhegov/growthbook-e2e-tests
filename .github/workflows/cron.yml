@@ -152,13 +152,15 @@ jobs:
         run: |
           cd gh-pages
 
-          rm -rf allure-report
-          cp -r ../allure-report ./allure-report
+          find . -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
+          cp -r ../allure-report/* .
+
           touch .nojekyll
 
           git add .
           git diff --quiet && echo "No changes to commit" || git commit -m "🚀 Update Allure report - run #${{ github.run_number }}"
           git push origin gh-pages
+
 
       # Остановка контейнеров GrowthBook с очисткой данных
       - name: Stop and cleanup Docker
