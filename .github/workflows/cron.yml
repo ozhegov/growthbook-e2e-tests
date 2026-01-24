@@ -107,6 +107,9 @@ jobs:
       - name: Clone gh-pages branch
         if: always()
         run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+
           if git ls-remote --heads https://github.com/${{ github.repository }} gh-pages | grep gh-pages; then
             echo "✅ Ветка gh-pages существует — клонируем"
             git clone --depth 1 --branch gh-pages https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} gh-pages
@@ -115,8 +118,13 @@ jobs:
             mkdir gh-pages
             cd gh-pages
             git init
-            git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
             git checkout -b gh-pages
+            echo "# Allure reports" > README.md
+            git add README.md
+            git commit -m "init gh-pages"
+            git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+            git push origin gh-pages
+            cd ..
           fi
 
       # Предоставление прав доступа к папке с результатами
@@ -142,12 +150,8 @@ jobs:
       - name: Deploy Allure report to GitHub Pages
         if: always()
         run: |
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
-
           cd gh-pages
 
-          mkdir -p allure-report
           rm -rf allure-report
           cp -r ../allure-report ./allure-report
           touch .nojekyll
