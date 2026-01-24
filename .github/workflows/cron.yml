@@ -1,5 +1,8 @@
 name: E2E Regression (cron)
 
+permissions:
+  contents: write
+
 on:
   schedule:
     - cron: '0 0 * * *' # каждый день в 00:00 UTC
@@ -104,7 +107,17 @@ jobs:
       - name: Clone gh-pages branch
         if: always()
         run: |
-          git clone --depth 1 --branch gh-pages https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} gh-pages || true
+          if git ls-remote --heads https://github.com/${{ github.repository }} gh-pages | grep gh-pages; then
+            echo "✅ Ветка gh-pages существует — клонируем"
+            git clone --depth 1 --branch gh-pages https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} gh-pages
+          else
+            echo "⚠️ Ветка gh-pages не существует — создаём"
+            mkdir gh-pages
+            cd gh-pages
+            git init
+            git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+            git checkout -b gh-pages
+          fi
 
       # Предоставление прав доступа к папке с результатами
       - name: Fix permissions on allure-results
@@ -133,6 +146,8 @@ jobs:
           git config --global user.name "GitHub Actions"
 
           cd gh-pages
+
+          mkdir -p allure-report
           rm -rf allure-report
           cp -r ../allure-report ./allure-report
           touch .nojekyll
