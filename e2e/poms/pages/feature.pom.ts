@@ -7,6 +7,7 @@ export class FeaturePagePOM extends BasePOM {
 
   /** Верхнее меню */
   readonly actionButton: Locator;
+  readonly box: (value: string) => Locator;
 
   /** Дополнительное меню */
   readonly actionMenu: Locator;
@@ -23,6 +24,12 @@ export class FeaturePagePOM extends BasePOM {
   readonly unarchiveFeatureModalHeader: Locator;
   readonly unarchiveModalUnarchivelButton: Locator;
 
+  /** Секция Description */
+  readonly description: Locator;
+
+  /** Секция Enabled Environments */
+  readonly envSwitch: (env: string) => Locator;
+
   constructor(page: Page) {
     super(page);
 
@@ -30,6 +37,11 @@ export class FeaturePagePOM extends BasePOM {
 
     /** Верхнее меню */
     this.actionButton = this.root.locator('[id^="more_menu"]').getByRole('button');
+    this.box = (value: string) =>
+      this.root
+        .locator('div.rt-Box')
+        .filter({ hasText: new RegExp(value) })
+        .last();
 
     /** Дополнительное меню */
     this.actionMenu = this.page.locator('div.dropdown-menu.show');
@@ -61,6 +73,12 @@ export class FeaturePagePOM extends BasePOM {
     this.unarchiveModalUnarchivelButton = this.unarchiveFeatureModal.getByRole('button', {
       name: FEATURE_PAGE.BUTTONS.UNARCHIVE,
     });
+
+    /** Секция Description */
+    this.description = this.root.locator('div.card-text');
+
+    /** Секция Enabled Environments */
+    this.envSwitch = (env: string) => page.getByRole('switch', { name: new RegExp(env, 'i') });
   }
 
   async open(featureId: string) {
