@@ -21,7 +21,10 @@ export interface FeatureFactoryOptions {
  *
  * @returns Объект данных для создания фичи.
  */
-export function getFeature(faker: Faker, options: FeatureFactoryOptions = {}): CreateFeatureInput {
+export function getFeature(
+  faker: Faker,
+  options: FeatureFactoryOptions = {},
+): CreateFeatureInput & { description: string } {
   return {
     id: options.id ?? getId('feat'),
     owner: options.owner ?? USERS[0].email,
