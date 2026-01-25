@@ -3,6 +3,7 @@ import {
   ErrorAlertPOM,
   ExperimentPagePOM,
   FeaturePagePOM,
+  FeaturesPagePOM,
   MembersPagePOM,
   WelcomePagePOM,
 } from '../poms';
@@ -19,6 +20,7 @@ export interface PomFixtures {
   welcomePagePOM: WelcomePagePOM;
   experimentPagePOM: ExperimentPagePOM;
   featurePagePOM: FeaturePagePOM;
+  featuresPagePOM: FeaturesPagePOM;
 }
 
 export const pomFixture = base.extend<PomFixtures>({
@@ -27,4 +29,5 @@ export const pomFixture = base.extend<PomFixtures>({
   welcomePagePOM: async ({ page }, use) => use(new WelcomePagePOM(page)),
   experimentPagePOM: async ({ page }, use) => use(new ExperimentPagePOM(page)),
   featurePagePOM: async ({ page }, use) => use(new FeaturePagePOM(page)),
+  featuresPagePOM: async ({ page }, use) => use(new FeaturesPagePOM(page)),
 });
