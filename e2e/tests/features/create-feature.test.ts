@@ -1,7 +1,14 @@
-import { DEFAULT_PROJECT_NAME, FEATURE_PAGE, FEATURES_PAGE, URLS } from '../../constants';
+import {
+  DEFAULT_PROJECT_NAME,
+  ERROR_MESSAGES,
+  FEATURE_PAGE,
+  FEATURES_PAGE,
+  URLS,
+} from '../../constants';
 import { getFeature, getTag } from '../../factories';
 import { setAllureMetadata, step } from '../../helpers/allure';
 import { expect, test } from '../../test';
+import { FEATURE_INVALID_KEYS } from '../../test-data/feature';
 import { USERS } from '../../test-data/users';
 
 test('Полный флоу создания новой фичи @allure.id=122005 @role=engineer @smoke', async ({
@@ -80,6 +87,7 @@ test('Полный флоу создания новой фичи @allure.id=1220
     );
     await step(`Создать фичу, нажав на кнопку "${FEATURES_PAGE.BUTTONS.CREATE}"`, async () => {
       await featuresPagePOM.createFeature();
+      await featuresPagePOM.waitForFeatureCreated();
     });
 
     await step('Выполнить проверки на странице созданного эксперимента:', async () => {
@@ -131,4 +139,57 @@ test('Полный флоу создания новой фичи @allure.id=1220
       );
     });
   });
+});
+
+test.describe('Фича не может быть создана с запрещенным символом в имени', () => {
+  for (const { value, reason } of FEATURE_INVALID_KEYS) {
+    test(`Невалидное имя - "${value}" ("${reason}") @allure.id=122009 @role=engineer @smoke`, async ({
+      featuresPagePOM,
+    }) => {
+      await setAllureMetadata({
+        owner: 'ozhegovmv',
+        backend: 'real',
+        tags: ['smoke', 'feature', 'validation'],
+      });
+
+      await step(
+        `Под ролью инженера перейти на страницу создания фичи "${URLS.FEATURES_PAGE}"`,
+        async () => {
+          await featuresPagePOM.open();
+        },
+      );
+      await step(
+        `Перейти к созданию фичи, нажав на кнопку "${FEATURES_PAGE.BUTTONS.ADD_FEATURE}"`,
+        async () => {
+          await featuresPagePOM.addFeature();
+        },
+      );
+
+      await step(`В модальном окне "${FEATURES_PAGE.MODALS.CREATE_FEATURE}":`, async () => {
+        await step(
+          `В селекторе "${FEATURES_PAGE.DROPDOWNS.VALUE.LABEL}" выбрать "${FEATURES_PAGE.DROPDOWNS.VALUE.OPTIONS.BOOLEAN}"`,
+          async () => {
+            await featuresPagePOM.selectValueType(FEATURES_PAGE.DROPDOWNS.VALUE.OPTIONS.BOOLEAN);
+          },
+        );
+        await step(`В поле "${FEATURES_PAGE.INPUTS.FEATURE_KEY}" ввести "${value}"`, async () => {
+          await featuresPagePOM.fillFeatureKey(value);
+        });
+        await step(
+          `Попытаться создать фичу, нажав на кнопку "${FEATURES_PAGE.BUTTONS.CREATE}"`,
+          async () => {
+            await featuresPagePOM.createFeature();
+          },
+        );
+        await step(
+          `Отображается сообщение об ошибке - "${ERROR_MESSAGES.FEATURE_KEY}"`,
+          async () => {
+            await expect(featuresPagePOM.createFeatureModal).toContainText(
+              ERROR_MESSAGES.FEATURE_KEY,
+            );
+          },
+        );
+      });
+    });
+  }
 });

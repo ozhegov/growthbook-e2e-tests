@@ -7,11 +7,11 @@ export class FeaturesPagePOM extends BasePOM {
   readonly root: Locator;
 
   /** Верхнее меню */
-  readonly addFeautureButton: Locator;
+  readonly addFeatureButton: Locator;
 
   /** Модальное окно Create Feature*/
-  readonly createFeautureModal: Locator;
-  readonly createFeautureModalHeader: Locator;
+  readonly createFeatureModal: Locator;
+  readonly createFeatureModalHeader: Locator;
   readonly featureKeyInput: Locator;
   readonly tagsBadge: Locator;
   readonly descriptionBadge: Locator;
@@ -28,44 +28,44 @@ export class FeaturesPagePOM extends BasePOM {
     this.root = this.page.getByRole('main');
 
     /** Верхнее меню */
-    this.addFeautureButton = this.root
+    this.addFeatureButton = this.root
       .getByRole('button', {
         name: FEATURES_PAGE.BUTTONS.ADD_FEATURE,
       })
       .first();
 
     /** Модальное окно Create Feature*/
-    this.createFeautureModalHeader = this.page.getByRole('heading', {
+    this.createFeatureModalHeader = this.page.getByRole('heading', {
       name: FEATURES_PAGE.MODALS.CREATE_FEATURE,
     });
-    this.createFeautureModal = this.page.locator('div.modal-content', {
-      has: this.createFeautureModalHeader,
+    this.createFeatureModal = this.page.locator('div.modal-content', {
+      has: this.createFeatureModalHeader,
     });
-    this.featureKeyInput = this.createFeautureModal.getByLabel(FEATURES_PAGE.INPUTS.FEATURE_KEY);
+    this.featureKeyInput = this.createFeatureModal.getByLabel(FEATURES_PAGE.INPUTS.FEATURE_KEY);
     this.tagsBadge = this.page.getByRole('link', { name: FEATURES_PAGE.BADGES.TAGS });
     this.descriptionBadge = this.page.getByRole('link', { name: FEATURES_PAGE.BADGES.DESCRIPTION });
-    this.tagsInput = this.createFeautureModal
+    this.tagsInput = this.createFeatureModal
       .locator('div.form-group')
       .filter({ hasText: FEATURES_PAGE.INPUTS.TAGS })
       .locator('input');
-    this.descriptionInput = this.createFeautureModal
+    this.descriptionInput = this.createFeatureModal
       .locator('div.form-group')
       .filter({ hasText: FEATURES_PAGE.INPUTS.DESCRIPTION })
       .locator('textarea');
-    this.projectSelector = this.createFeautureModal
+    this.projectSelector = this.createFeatureModal
       .locator('div.form-group', {
         has: this.page.getByText(FEATURES_PAGE.DROPDOWNS.PROJECT.LABEL),
       })
       .locator('input[role="combobox"]');
-    this.valueTypeSelector = this.createFeautureModal
+    this.valueTypeSelector = this.createFeatureModal
       .locator('div.form-group', {
         has: this.page.getByText(FEATURES_PAGE.DROPDOWNS.VALUE.LABEL),
       })
       .locator('input[role="combobox"]');
-    this.createButton = this.createFeautureModal.getByRole('button', {
+    this.createButton = this.createFeatureModal.getByRole('button', {
       name: FEATURES_PAGE.BUTTONS.CREATE,
     });
-    this.selectorOptions = this.createFeautureModal.getByRole('listbox');
+    this.selectorOptions = this.createFeatureModal.getByRole('listbox');
   }
 
   async open() {
@@ -74,7 +74,7 @@ export class FeaturesPagePOM extends BasePOM {
 
   /** Верхнее меню */
   async addFeature() {
-    await this.addFeautureButton.click();
+    await this.addFeatureButton.click();
   }
 
   /** Модальное окно Create Feature*/
@@ -109,6 +109,9 @@ export class FeaturesPagePOM extends BasePOM {
 
   async createFeature() {
     await this.createButton.click();
+  }
+
+  async waitForFeatureCreated() {
     await this.page.waitForResponse(
       (response) =>
         response.url().endsWith('/feature?') &&
