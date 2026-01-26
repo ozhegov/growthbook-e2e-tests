@@ -25,8 +25,9 @@ export async function addUserToTeam(
   });
 
   if (!res.ok()) {
+    const error = await res.text();
     throw new Error(
-      `Неуспешное добавление пользователя ${userId} в члены команды: ${res.status()}`,
+      `Неуспешное добавление пользователя ${userId} в члены команды: ${res.status()} - ${error}`,
     );
   }
 }

@@ -1,26 +1,3 @@
-export interface AuthResponse {
-  token: string;
-  projectId?: string;
-}
-
-export interface CreateSdkConnectionInput {
-  name: string;
-  language?: string;
-  sdkVersion?: string;
-  environment?: string;
-  projects?: string[];
-  encryptPayload?: boolean;
-  hashSecureAttributes?: boolean;
-  includeVisualExperiments?: boolean;
-  includeDraftExperiments?: boolean;
-  includeExperimentNames?: boolean;
-  includeRedirectExperiments?: boolean;
-  includeRuleIds?: boolean;
-  proxyEnabled?: boolean;
-  remoteEvalEnabled?: boolean;
-  savedGroupReferencesEnabled?: boolean;
-}
-
 export type FeatureValueType = 'boolean' | 'string' | 'number' | 'json';
 
 export interface CreateFeatureInput {
@@ -91,4 +68,68 @@ export interface CreateFeatureInput {
   customFields?: {
     property?: string;
   };
+}
+
+export interface CreateFeatureResponse {
+  feature: Feature;
+}
+
+export interface Feature {
+  id: string;
+  dateCreated: string;
+  dateUpdated: string;
+  archived: boolean;
+  description?: string;
+  owner: string;
+  project?: string;
+  valueType: FeatureValueType;
+  defaultValue: string;
+  tags?: string[];
+  environments?: Record<string, FeatureEnvironment>;
+  revision?: FeatureRevision;
+  prerequisites?: string[];
+  customFields?: Record<string, unknown>;
+}
+
+export interface FeatureEnvironment {
+  enabled: boolean;
+  defaultValue: string;
+  rules: FeatureRule[];
+  definition?: string;
+  draft?: FeatureDraft;
+}
+
+export interface FeatureDraft {
+  enabled?: boolean;
+  defaultValue: string;
+  rules: FeatureRule[];
+  definition?: string;
+}
+
+export interface FeatureRule {
+  id?: string;
+  description?: string;
+  condition?: string;
+  enabled?: boolean;
+  type?: 'force' | string;
+  value?: string;
+  savedGroupTargeting?: SavedGroupTargeting[];
+  scheduleRules?: ScheduleRule[];
+}
+
+export interface SavedGroupTargeting {
+  matchType: 'all' | 'any' | 'none';
+  savedGroups: string[];
+}
+
+export interface ScheduleRule {
+  enabled?: boolean;
+  timestamp?: string;
+}
+
+export interface FeatureRevision {
+  version: number;
+  comment?: string;
+  date: string;
+  publishedBy?: string;
 }

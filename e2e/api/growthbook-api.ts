@@ -1,6 +1,6 @@
 import type { APIRequestContext } from '@playwright/test';
 import { API_BASE_URL } from '../config';
-import type { CreateSdkConnectionInput } from './types';
+import type { CreateSdkConnectionInput, CreateSdkConnectionResponse } from './types';
 
 /**
  * Создание API ключа (secret) для администратора через GrowthBook API.
@@ -60,33 +60,20 @@ export async function createSdkConnection(
   req: APIRequestContext,
   secretKey: string,
   data: CreateSdkConnectionInput,
-) {
+): Promise<CreateSdkConnectionResponse> {
   const res = await req.post(`${API_BASE_URL}/api/v1/sdk-connections`, {
     headers: {
       Authorization: `Bearer ${secretKey}`,
     },
-    data: {
-      name: data.name,
-      language: data.language || 'javascript',
-      sdkVersion: data.sdkVersion || '1.6.2',
-      environment: data.environment || 'production',
-      projects: data.projects || [],
-      encryptPayload: data.encryptPayload ?? false,
-      hashSecureAttributes: data.hashSecureAttributes ?? false,
-      includeVisualExperiments: data.includeVisualExperiments ?? true,
-      includeDraftExperiments: data.includeDraftExperiments ?? true,
-      includeExperimentNames: data.includeExperimentNames ?? false,
-      includeRedirectExperiments: data.includeRedirectExperiments ?? true,
-      includeRuleIds: data.includeRuleIds ?? true,
-      proxyEnabled: data.proxyEnabled ?? false,
-      proxyHost: '',
-      remoteEvalEnabled: data.remoteEvalEnabled ?? false,
-      savedGroupReferencesEnabled: data.savedGroupReferencesEnabled ?? false,
-    },
+    data,
   });
 
   if (!res.ok()) {
     const error = await res.text();
-    throw new Error(`Неуспешное создание SDK Connection: "${res.status()}" - "${error}"`);
+    throw new Error(
+      `Неуспешное создание SDK Connection "${data.name}": "${res.status()}" - "${error}"`,
+    );
   }
+
+  return (await res.json()) as CreateSdkConnectionResponse;
 }

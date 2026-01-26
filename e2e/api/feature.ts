@@ -1,6 +1,6 @@
 import type { APIRequestContext } from '@playwright/test';
 import { API_BASE_URL } from '../config';
-import type { CreateFeatureInput } from './types';
+import type { CreateFeatureInput, CreateFeatureResponse } from './types';
 
 /**
  * Создание фичи через GrowthBook API.
@@ -13,31 +13,18 @@ export async function createFeature(
   req: APIRequestContext,
   secretKey: string,
   data: CreateFeatureInput,
-) {
+): Promise<CreateFeatureResponse> {
   const res = await req.post(`${API_BASE_URL}/api/v1/features`, {
     headers: {
       Authorization: `Bearer ${secretKey}`,
     },
-    data: {
-      id: data.id,
-      archived: data.archived,
-      description: data.description,
-      owner: data.owner,
-      project: data.project,
-      valueType: data.valueType,
-      defaultValue: data.defaultValue,
-      tags: data.tags,
-      environments: data.environments,
-      prerequisites: data.prerequisites,
-      jsonSchema: data.jsonSchema,
-      customFields: data.customFields,
-    },
+    data,
   });
 
   if (!res.ok()) {
     const error = await res.text();
-    throw new Error(`Неуспешное создание фичи: "${res.status()}" - "${error}"`);
+    throw new Error(`Неуспешное создание фичи "${data.id}": "${res.status()}" - "${error}"`);
   }
 
-  return res.json();
+  return (await res.json()) as CreateFeatureResponse;
 }
