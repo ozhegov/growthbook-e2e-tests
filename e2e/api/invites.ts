@@ -30,7 +30,10 @@ export async function inviteUser(
   });
 
   if (!res.ok()) {
-    throw new Error(`Неуспешное приглашение пользователя "${user.email}": ${res.status()}`);
+    const error = await res.text();
+    throw new Error(
+      `Неуспешное приглашение пользователя "${user.email}": "${res.status()}" - "${error}"`,
+    );
   }
 
   const { inviteUrl } = await res.json();
@@ -55,14 +58,22 @@ export async function inviteUser(
  * @param key - ключ приглашения (параметр `key` из inviteUrl).
  * @throws Error если ключ приглашения отсутствует или приглашение не удалось принять за 3 попытки.
  */
-export async function acceptInviteWithRetry(req: APIRequestContext, token: string, key: string) {
+export async function acceptInviteWithRetry(
+  req: APIRequestContext,
+  token: string,
+  key: string,
+  options: { retries?: number; delayMs?: number } = {},
+) {
+  const retries = options.retries ?? 3;
+  const delayMs = options.delayMs ?? 500;
+
   if (!key) {
     throw new Error('Ключ приглашения отсутствует');
   }
 
   let lastStatus: number | undefined;
 
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < retries; i++) {
     const res = await req.post(`${API_BASE_URL}/invite/accept`, {
       headers: { Authorization: `Bearer ${token}` },
       data: { key },
@@ -71,7 +82,7 @@ export async function acceptInviteWithRetry(req: APIRequestContext, token: strin
     if (res.ok()) return;
     lastStatus = res.status();
 
-    await new Promise((res) => setTimeout(res, 500));
+    await new Promise((res) => setTimeout(res, delayMs));
   }
 
   throw new Error(`Неуспешное принятие приглашения за 3 попытки (последний статус: ${lastStatus})`);

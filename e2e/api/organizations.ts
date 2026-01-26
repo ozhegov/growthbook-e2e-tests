@@ -1,5 +1,6 @@
 import type { APIRequestContext } from '@playwright/test';
 import { API_BASE_URL } from '../config';
+import type { UserApiResponse } from './types';
 
 /**
  * Получение ID организации через GrowthBook API.
@@ -15,10 +16,13 @@ export async function getOrganizationId(req: APIRequestContext, token: string): 
   });
 
   if (!res.ok()) {
-    throw new Error(`Неуспешный запрос на получение ID организации: "${res.status()}"`);
+    const error = await res.text();
+    throw new Error(
+      `Неуспешный запрос на получение ID организации: "${res.status()}" - "${error}"`,
+    );
   }
 
-  const data = await res.json();
+  const data: UserApiResponse = await res.json();
   const orgId = data.organizations?.[0]?.id;
 
   if (!orgId) {

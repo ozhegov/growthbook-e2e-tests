@@ -1,5 +1,6 @@
 import type { APIRequestContext } from '@playwright/test';
 import { API_BASE_URL } from '../config';
+import type { UserApiResponse } from './types';
 
 /**
  * Получает ID пользователя через GrowthBook API.
@@ -15,11 +16,16 @@ export async function getUserId(req: APIRequestContext, token: string): Promise<
   });
 
   if (!res.ok()) {
-    throw new Error(`Неуспешный запрос на получение ID пользователя: "${res.status()}"`);
+    const error = await res.text();
+    throw new Error(`Неуспешный запрос на получение ID пользователя: "${res.status()}" - ${error}`);
   }
 
-  const data = await res.json();
+  const data: UserApiResponse = await res.json();
   const userId = data.userId;
+
+  if (!userId) {
+    throw new Error('Неуспешный запрос на получение ID пользователя: ID отсутствует');
+  }
 
   return userId;
 }

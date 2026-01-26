@@ -52,7 +52,7 @@ async function writeState(state: StorageState) {
  * Используется в тестах для получения данных,
  * созданных в global-setup (например, apiKey или orgId).
  *
- * @param key - Ключ значения в storage.
+ * @param key - ключ значения в storage.
  * @throws Error если значение по ключу отсутствует.
  * @returns Значение из storage.
  */

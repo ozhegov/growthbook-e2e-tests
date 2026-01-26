@@ -17,7 +17,7 @@ export async function addUserToTeam(
 ) {
   const res = await adminReq.post(`${API_BASE_URL}/orphaned-users/${userId}/add`, {
     data: {
-      role: role,
+      role,
       projectRoles: [],
       environments: [],
       limitAccessByEnvironment: false,
@@ -25,8 +25,9 @@ export async function addUserToTeam(
   });
 
   if (!res.ok()) {
+    const error = await res.text();
     throw new Error(
-      `Неуспешное добавление пользователя ${userId} в члены команды: ${res.status()}`,
+      `Неуспешное добавление пользователя ${userId} в члены команды: ${res.status()} - ${error}`,
     );
   }
 }

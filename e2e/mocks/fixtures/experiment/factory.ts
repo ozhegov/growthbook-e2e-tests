@@ -7,8 +7,8 @@ import type { ExperimentStatus } from './types';
  * (running / stopped и т.д.) без обращения к реальному API.
  *
  * @param params
- * @param params.id - Идентификатор эксперимента
- * @param params.status - Статус эксперимента
+ * @param params.id - идентификатор эксперимента
+ * @param params.status - статус эксперимента
  *
  * @returns Полный объект эксперимента в формате API
  */
