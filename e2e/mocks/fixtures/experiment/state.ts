@@ -8,7 +8,7 @@ export let currentExperiment = defaultStatus;
 /**
  * Задает необходимый статус эксперимента.
  *
- * @param status Статус эксперимента.
+ * @param status - статус эксперимента.
  */
 export function setExperimentStatus(status: ExperimentStatus) {
   switch (status) {
