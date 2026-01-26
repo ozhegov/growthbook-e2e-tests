@@ -1,3 +1,4 @@
+export * from './badges';
 export * from './select';
 export * from './user';
 export * from './user-role';

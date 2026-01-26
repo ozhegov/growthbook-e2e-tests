@@ -105,40 +105,74 @@ export class MembersPagePOM extends BasePOM {
     });
   }
 
+  /**
+   * Открывает страницу Members в разделе настроек.
+   */
   async open() {
     await super.open(URLS.SETTINGS_MEMBERS);
   }
 
   /** Секция Active Members */
+
+  /**
+   * Открывает меню действий для пользователя в секции Active Members.
+   *
+   * @param userData - идентификатор пользователя (email/имя).
+   */
   async openActiveMembersActionMenu(userData: string) {
     await this.activeMembersActionButton(userData).click();
   }
 
+  /**
+   * Открывает модальное окно удаления пользователя.
+   */
   async openDeleteUserModal() {
     await this.removeUserButton.click();
     await expect(this.deleteUserModal).toBeVisible();
   }
 
   /** Секция Orphaned Users */
+
+  /**
+   * Открывает меню действий для пользователя в секции Orphaned Users.
+   *
+   * @param userData - идентификатор пользователя (email/имя).
+   */
   async openOrphanedUsersActionMenu(userData: string) {
     await this.orphanedUsersActionButton(userData).click();
   }
 
+  /**
+   * Открывает модальное окно добавления пользователя.
+   */
   async openAddUserModal() {
     await this.addBackToAccountButton.click();
     await expect(this.addUserModal).toBeVisible();
   }
 
   /** Модальное окно Add user*/
+
+  /**
+   * Выбирает глобальную роль пользователя.
+   *
+   * @param role - роль пользователя.
+   */
   async selectGlobalRole(role: UserRoleTest) {
     await this.selectOptionInDropdown(this.globalRoleSelector, this.selectorOptions, role);
   }
 
+  /**
+   * Подтверждает добавление пользователя в модальном окне.
+   */
   async addUser() {
     await this.addButton.click();
   }
 
   /** Модальное окно Delete user*/
+
+  /**
+   * Подтверждает удаление пользователя в модальном окне.
+   */
   async deleteUser() {
     await this.deleteButton.click();
   }

@@ -78,33 +78,56 @@ export class FeaturePagePOM extends BasePOM {
     this.description = this.root.locator('div.card-text');
 
     /** Секция Enabled Environments */
-    this.envSwitch = (env: string) => page.getByRole('switch', { name: new RegExp(env, 'i') });
+    this.envSwitch = (env: string) => this.page.getByRole('switch', { name: new RegExp(env, 'i') });
   }
 
+  /**
+   * Открывает страницу фичи по её идентификатору.
+   *
+   * @param featureId - идентификатор фичи.
+   */
   async open(featureId: string) {
     await super.open(URLS.FEATURE_PAGE(featureId));
   }
 
   /** Дополнительное меню */
+
+  /**
+   * Открывает дополнительное меню действий фичи.
+   */
   async openActionMenu() {
     await super.openActionMenu(this.actionButton);
   }
 
+  /**
+   * Выбирает действие архивации в меню фичи.
+   */
   async archiveFeature() {
     await this.archiveButton.click();
   }
 
+  /**
+   * Выбирает действие разархивации в меню фичи.
+   */
   async unarchiveFeature() {
     await this.unarchiveButton.click();
   }
 
   /** Модальное окно Archive Feature*/
+
+  /**
+   * Подтверждает архивирование фичи в модальном окне.
+   */
   async submitArchiveFeature() {
-    this.archiveModalArchivelButton.click();
+    await this.archiveModalArchivelButton.click();
   }
 
   /** Модальное окно Unarchive Feature*/
+
+  /**
+   * Подтверждает разархивацию фичи в модальном окне.
+   */
   async submitUnarchiveFeature() {
-    this.unarchiveModalUnarchivelButton.click();
+    await this.unarchiveModalUnarchivelButton.click();
   }
 }

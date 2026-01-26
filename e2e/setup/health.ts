@@ -1,7 +1,7 @@
 import { API_BASE_URL, MAX_RETRIES, REQUEST_TIMEOUT, RETRY_DELAY } from '../config';
 
 /**
- * Проверка состояния GrowthBook API перед global-setup для запуска E2E тестов.
+ * Проверяет состояние GrowthBook API перед global-setup для запуска E2E тестов.
  *
  * Критерий готовности: эндпоинт `${API_BASE_URL}/auth/refresh` начинает отвечать
  * успешным статусом (2xx) либо 400/401 (API функционирует, но нет валидной авторизации).

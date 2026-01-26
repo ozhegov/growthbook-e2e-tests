@@ -1,13 +1,13 @@
 import type { Locator, Page } from '@playwright/test';
 import { EXPERIMENT_PAGE, URLS } from '../../constants';
-import type { ConclusionOption, VariationOption } from '../../types';
+import type { ConclusionOption, ExperimentBadge, VariationOption } from '../../types';
 import { BasePOM } from '../base.pom';
 
 export class ExperimentPagePOM extends BasePOM {
   readonly root: Locator;
 
   /** Верхнее меню */
-  readonly experimentBadge: (status: string) => Locator;
+  readonly experimentBadge: (status: ExperimentBadge) => Locator;
   readonly makeChangesButton: Locator;
   readonly stopExperimentButton: Locator;
   readonly actionButton: Locator;
@@ -44,7 +44,7 @@ export class ExperimentPagePOM extends BasePOM {
     this.root = this.page.getByRole('main');
 
     /** Верхнее меню */
-    this.experimentBadge = (status: string) => this.root.getByText(status);
+    this.experimentBadge = (status: ExperimentBadge) => this.root.getByText(status);
     this.makeChangesButton = this.root.getByRole('button', {
       name: EXPERIMENT_PAGE.BUTTONS.MAKE_CHANGES,
     });
@@ -117,39 +117,73 @@ export class ExperimentPagePOM extends BasePOM {
     });
   }
 
+  /**
+   * Открывает страницу эксперимента по id.
+   *
+   * @param experimentId - идентификатор эксперимента.
+   */
   async open(experimentId: string) {
     await super.open(URLS.EXPERIMENT_PAGE(experimentId));
   }
 
   /** Верхнее меню */
+
+  /**
+   * Открывает модальное окно запуска эксперимента.
+   */
   async startExperiment() {
-    this.startExperimentButton.click();
+    await this.startExperimentButton.click();
   }
 
+  /**
+   * Открывает модальное окно остановки эксперимента.
+   */
   async stopExperiment() {
-    this.stopExperimentButton.click();
+    await this.stopExperimentButton.click();
   }
 
   /** Дополнительное меню */
+
+  /**
+   * Открывает дополнительное меню действий эксперимента.
+   */
   async openActionMenu() {
     await super.openActionMenu(this.actionButton);
   }
 
   /** Модальное окно Start Experiment*/
+
+  /**
+   * Подтверждает запуск эксперимента в модальном окне.
+   */
   async clickStartNowButton() {
     await this.startNowButton.click();
   }
 
   /** Модальное окно Stop Experiment*/
+
+  /**
+   * Выбирает итог эксперимента в модальном окне остановки.
+   *
+   * @param conclusion - тип результата эксперимента.
+   */
   async selectConclusion(conclusion: ConclusionOption) {
     await this.selectOptionInDropdown(this.conclusionSelector, this.selectorsOptions, conclusion);
   }
 
+  /**
+   * Выбирает победившую вариацию эксперимента.
+   *
+   * @param variation - название вариации.
+   */
   async selectVariation(variation: VariationOption) {
     await this.selectOptionInDropdown(this.variationSelector, this.selectorsOptions, variation);
   }
 
+  /**
+   * Подтверждает остановку эксперимента в модальном окне.
+   */
   async clickStopButton() {
-    this.stopButton.click();
+    await this.stopButton.click();
   }
 }

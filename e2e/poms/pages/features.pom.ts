@@ -68,53 +68,98 @@ export class FeaturesPagePOM extends BasePOM {
     this.selectorOptions = this.createFeatureModal.getByRole('listbox');
   }
 
+  /**
+   * Открывает страницу списка фич.
+   */
   async open() {
     await super.open(URLS.FEATURES_PAGE);
   }
 
   /** Верхнее меню */
+
+  /**
+   * Открывает модальное окно создания новой фичи.
+   */
   async addFeature() {
     await this.addFeatureButton.click();
   }
 
   /** Модальное окно Create Feature*/
+
+  /**
+   * Заполняет поле ключа фичи.
+   *
+   * @param key - ключ фичи.
+   */
   async fillFeatureKey(key: string) {
     await this.featureKeyInput.fill(key);
   }
 
+  /**
+   * Раскрывает поле добавления тегов.
+   */
   async expandTagsInput() {
     await this.tagsBadge.click();
   }
 
+  /**
+   * Раскрывает поле добавления описания фичи.
+   */
   async expandDescriptionInput() {
     await this.descriptionBadge.click();
   }
 
+  /**
+   * Добавляет тег фичи.
+   *
+   * @param tag - значение тега.
+   */
   async addFeatureTag(tag: string) {
     await this.tagsInput.fill(tag);
     await this.tagsInput.press('Enter');
   }
 
+  /**
+   * Добавляет описание фичи.
+   *
+   * @param description - описание фичи.
+   */
   async fillFeatureDescription(description: string) {
-    this.descriptionInput.fill(description);
+    await this.descriptionInput.fill(description);
   }
 
+  /**
+   * Выбирает проект, к которому относится фича.
+   *
+   * @param project - проект текущей организации.
+   */
   async selectFeatureProject(project: string) {
     await this.selectOptionInDropdown(this.projectSelector, this.selectorOptions, project);
   }
 
+  /**
+   * Выбирает тип значения фичи.
+   *
+   * @param valueType - тип значения фичи.
+   */
   async selectValueType(valueType: FeatureValueType) {
     await this.selectOptionInDropdown(this.valueTypeSelector, this.selectorOptions, valueType);
   }
 
+  /**
+   * Подтверждает создание фичи в модальном окне.
+   */
   async createFeature() {
     await this.createButton.click();
   }
 
+  /**
+   * Ожидает успешного создания фичи по сетевому запросу.
+   */
   async waitForFeatureCreated() {
     await this.page.waitForResponse(
       (response) =>
-        response.url().endsWith('/feature?') &&
+        response.url().includes('/feature?') &&
         response.status() === 200 &&
         response.request().method() === 'GET',
     );
