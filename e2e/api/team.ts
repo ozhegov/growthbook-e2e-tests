@@ -17,7 +17,7 @@ export async function addUserToTeam(
 ) {
   const res = await adminReq.post(`${API_BASE_URL}/orphaned-users/${userId}/add`, {
     data: {
-      role: role,
+      role,
       projectRoles: [],
       environments: [],
       limitAccessByEnvironment: false,
