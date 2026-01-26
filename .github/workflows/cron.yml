@@ -150,16 +150,29 @@ jobs:
       - name: Deploy Allure report to GitHub Pages
         if: always()
         run: |
+          echo "📊 Проверяем наличие Allure отчета..."
+          ls -la allure-report/ || echo "⚠️ Папка allure-report не найдена"
+    
           cd gh-pages
-
-          find . -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
+    
+          echo "🧹 Очищаем старые файлы..."
+          find . -mindepth 1 -maxdepth 1 ! -name '.git' ! -name '.nojekyll' -exec rm -rf {} +
+    
+          echo "📋 Копируем новый отчет..."
           cp -r ../allure-report/* .
-
-          touch .nojekyll
-
-          git add .
-          git diff --quiet && echo "No changes to commit" || git commit -m "🚀 Update Allure report - run #${{ github.run_number }}"
-          git push origin gh-pages
+    
+          echo "✅ Содержимое gh-pages:"
+          ls -la
+    
+          echo "📝 Git status:"
+          git status
+    
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+    
+          git add -A
+          git commit -m "🚀 Update Allure report - run #${{ github.run_number }}" || echo "⚠️ Нет изменений для коммита"
+          git push origin gh-pages -f
 
 
       # Остановка контейнеров GrowthBook с очисткой данных
