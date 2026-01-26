@@ -1,5 +1,8 @@
 name: E2E Regression (cron)
 
+permissions:
+  contents: write
+
 on:
   schedule:
     - cron: '0 0 * * *' # каждый день в 00:00 UTC
@@ -104,7 +107,25 @@ jobs:
       - name: Clone gh-pages branch
         if: always()
         run: |
-          git clone --depth 1 --branch gh-pages https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} gh-pages || true
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+
+          if git ls-remote --heads https://github.com/${{ github.repository }} gh-pages | grep gh-pages; then
+            echo "✅ Ветка gh-pages существует — клонируем"
+            git clone --depth 1 --branch gh-pages https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} gh-pages
+          else
+            echo "⚠️ Ветка gh-pages не существует — создаём"
+            mkdir gh-pages
+            cd gh-pages
+            git init
+            git checkout -b gh-pages
+            echo "# Allure reports" > README.md
+            git add README.md
+            git commit -m "init gh-pages"
+            git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+            git push origin gh-pages
+            cd ..
+          fi
 
       # Предоставление прав доступа к папке с результатами
       - name: Fix permissions on allure-results
@@ -129,16 +150,17 @@ jobs:
       - name: Deploy Allure report to GitHub Pages
         if: always()
         run: |
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
-
           cd gh-pages
-          rm -rf allure-report
-          cp -r ../allure-report ./allure-report
+    
+          find . -mindepth 1 -maxdepth 1 ! -name '.git' ! -name '.nojekyll' -exec rm -rf {} +
+    
+          cp -r ../allure-report/* .
+    
           touch .nojekyll
-
-          git add .
-          git diff --quiet && echo "No changes to commit" || git commit -m "🚀 Update Allure report - run #${{ github.run_number }}"
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          git add -A
+          git commit -m "🚀 Update Allure report - run #${{ github.run_number }}" || true
           git push origin gh-pages
 
       # Остановка контейнеров GrowthBook с очисткой данных
