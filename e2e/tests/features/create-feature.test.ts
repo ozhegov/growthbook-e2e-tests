@@ -68,12 +68,6 @@ test('Полный флоу создания новой фичи @allure.id=1220
       },
     );
     await step(
-      `В поле "${FEATURES_PAGE.INPUTS.DESCRIPTION}" ввести "${featureData.description}"`,
-      async () => {
-        await featuresPagePOM.fillFeatureDescription(featureData.description);
-      },
-    );
-    await step(
       `В селекторе "${FEATURES_PAGE.DROPDOWNS.PROJECT.LABEL}" выбрать "${DEFAULT_PROJECT_NAME}"`,
       async () => {
         await featuresPagePOM.selectFeatureProject(DEFAULT_PROJECT_NAME);
