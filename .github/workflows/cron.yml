@@ -19,9 +19,17 @@ jobs:
       STORAGE_DIR: storage
       RUN_ID: ${{ github.run_number }}
 
+      ALLURE_REPORT_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+
       ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
       ENGINEER_PASSWORD: ${{ secrets.ENGINEER_PASSWORD }}
       EXPERIMENTER_PASSWORD: ${{ secrets.EXPERIMENTER_PASSWORD }}
+
+      TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+
+      SEND_TELEGRAM_ON_SUCCESS: 'false'
+      SEND_TELEGRAM_ON_FAIL: 'true'
 
     steps:
       # Скачивание кода из репозитория
@@ -162,6 +170,11 @@ jobs:
           git add -A
           git commit -m "🚀 Update Allure report - run #${{ github.run_number }}" || true
           git push origin gh-pages
+
+      # Отправка уведомления в Telegram
+      - name: Send Telegram notification
+        if: always()
+        run: npm run notify
 
       # Остановка контейнеров GrowthBook с очисткой данных
       - name: Stop and cleanup Docker

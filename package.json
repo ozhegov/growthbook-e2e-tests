@@ -16,6 +16,7 @@
 		"allure:report": "allure generate ./allure-results -o ./allure-report --clean",
 		"allure:open": "allure open ./allure-report",
 		"test:allure": "npm run test && npm run allure:report && npm run allure:open",
+		"notify": "tsx e2e/notifications/notify.ts",
 		"type-check": "tsc --noEmit",
 		"docker:up": "docker-compose up -d",
 		"docker:down": "docker-compose down",
@@ -42,6 +43,7 @@
 		"husky": "^9.1.7",
 		"lint-staged": "^16.2.7",
 		"ts-node": "^10.9.2",
+		"tsx": "^4.21.0",
 		"typescript": "^5.9.3"
 	}
 }
