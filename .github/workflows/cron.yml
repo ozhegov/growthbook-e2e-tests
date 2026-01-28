@@ -59,9 +59,13 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      # Линтинг кода (Biome)
-      - name: Lint code
+      # Проверка качества кода и форматирования (Biome)
+      - name: Code quality (Biome lint & format check)
         run: npm run check
+
+      # Линтинг тестов с проверкой архитектурных правил (ESLint)
+      - name: Test code quality & architecture rules (ESLint)
+        run: npm run lint:tests
 
       # Проверка типов TypeScript
       - name: Type check
