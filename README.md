@@ -20,7 +20,7 @@ npm run test:smoke
 - отчётность: `npm run allure:report && npm run allure:open`
 
 ![Тестовый прогон](/docs/images/test-run.gif)
-*Пример прогоня smoke-теста*
+*Пример прогона smoke-теста*
 
 ---
 
