@@ -1,11 +1,15 @@
 # Проект по автоматизации тестирования self-hosted версии приложения **[GrowthBook](https://www.growthbook.io/)**
 
+![GrowthBook лого](/docs/images/growthbook-logo.png)
+
 ## Быстрый старт
 
 Проект содержит `docker-compose` конфигурацию для локального запуска GrowthBook.
 Дополнительная установка приложения не требуется.
 
 ```bash
+git clone https://github.com/ozhegov/growthbook-e2e-tests.git
+cd growthbook-e2e-tests
 npm run docker:up
 npm install
 npm run test:smoke
@@ -14,6 +18,8 @@ npm run test:smoke
 - мок-тесты: `@mock` в названии теста
 - роли пользователей: `@role=admin | engineer | experimenter` в названии теста
 - отчётность: `npm run allure:report && npm run allure:open`
+
+![Тестовый прогон](/docs/images/test-run.gif)
 
 ---
 
@@ -208,6 +214,8 @@ npm run test:regression
 Отчёт доступен по ссылке:
 https://ozhegov.github.io/growthbook-e2e-tests/
 
+![Allure графики](/docs/images/allure_graphs.png)
+![Allure тест-кейс](/docs/images/allure_test_case.png)
 ---
 
 ## Линтинг и контроль качества
