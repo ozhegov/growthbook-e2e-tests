@@ -20,6 +20,7 @@ npm run test:smoke
 - отчётность: `npm run allure:report && npm run allure:open`
 
 ![Тестовый прогон](/docs/images/test-run.gif)
+*Пример прогоня smoke-теста*
 
 ---
 
@@ -215,7 +216,11 @@ npm run test:regression
 https://ozhegov.github.io/growthbook-e2e-tests/
 
 ![Allure графики](/docs/images/allure_graphs.png)
+*Общая статистика прогонов тестов в Allure*
+
 ![Allure тест-кейс](/docs/images/allure_test_case.png)
+*Детальный отчёт по конкретному тест-кейсу*
+
 ---
 
 ## Линтинг и контроль качества
