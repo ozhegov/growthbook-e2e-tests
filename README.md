@@ -212,6 +212,12 @@ npm run test:regression
 - публикация Allure‑отчёта на GitHub Pages
 - отправка результатов в Telegram
 
+<div align="center">
+
+![Telegram сообщение](/docs/images/telegram_notification.png)
+
+</div>
+
 Отчёт доступен по ссылке:
 https://ozhegov.github.io/growthbook-e2e-tests/
 
