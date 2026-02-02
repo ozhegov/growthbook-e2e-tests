@@ -215,7 +215,6 @@ npm run test:regression
 <div align="center">
 
 ![Telegram сообщение](/docs/images/telegram_notification.png)
-*Нотификация о результатах тестового прогона в Telegram*
 
 </div>
 
