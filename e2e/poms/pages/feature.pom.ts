@@ -1,5 +1,6 @@
 import type { Locator, Page } from '@playwright/test';
 import { FEATURE_PAGE, URLS } from '../../constants';
+import { expect } from '../../test';
 import { BasePOM } from '../base.pom';
 
 export class FeaturePagePOM extends BasePOM {
@@ -36,7 +37,9 @@ export class FeaturePagePOM extends BasePOM {
     this.root = this.page.getByRole('main');
 
     /** Верхнее меню */
-    this.actionButton = this.root.locator('[id^="more_menu"]').getByRole('button');
+    this.actionButton = this.root
+      .locator('[id^="more_menu"] button')
+      .or(this.root.locator('button[aria-haspopup="menu"]'));
     this.box = (value: string) =>
       this.root
         .locator('div.rt-Box')
@@ -44,13 +47,17 @@ export class FeaturePagePOM extends BasePOM {
         .last();
 
     /** Дополнительное меню */
-    this.actionMenu = this.page.locator('div.dropdown-menu.show');
-    this.archiveButton = this.actionMenu.getByRole('button', {
-      name: FEATURE_PAGE.BUTTONS.ARCHIVE,
-    });
-    this.unarchiveButton = this.actionMenu.getByRole('button', {
-      name: FEATURE_PAGE.BUTTONS.UNARCHIVE,
-    });
+    this.actionMenu = this.page.locator('.dropdown-menu.show, .rt-DropdownMenuViewport');
+    this.archiveButton = this.actionMenu
+      .getByRole('button', {
+        name: FEATURE_PAGE.BUTTONS.ARCHIVE,
+      })
+      .or(this.page.getByRole('menuitem', { name: FEATURE_PAGE.BUTTONS.ARCHIVE }));
+    this.unarchiveButton = this.actionMenu
+      .getByRole('button', {
+        name: FEATURE_PAGE.BUTTONS.UNARCHIVE,
+      })
+      .or(this.page.getByRole('menuitem', { name: FEATURE_PAGE.BUTTONS.UNARCHIVE }));
 
     /** Модальное окно Archive Feature*/
     this.archiveFeatureModalHeader = this.page.getByRole('heading', {
@@ -88,6 +95,8 @@ export class FeaturePagePOM extends BasePOM {
    */
   async open(featureId: string) {
     await super.open(URLS.FEATURE_PAGE(featureId));
+
+    await expect(this.actionButton).toBeVisible();
   }
 
   /** Дополнительное меню */

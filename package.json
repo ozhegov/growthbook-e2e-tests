@@ -20,10 +20,10 @@
 		"test:allure": "npm run test && npm run allure:report && npm run allure:open",
 		"notify": "tsx e2e/notifications/notify.ts",
 		"type-check": "tsc --noEmit",
-		"docker:up": "docker-compose up -d",
-		"docker:down": "docker-compose down",
-		"docker:reset": "docker-compose down -v --remove-orphans",
-		"docker:logs": "docker-compose logs -f growthbook"
+		"docker:up": "docker compose up -d",
+		"docker:down": "docker compose down",
+		"docker:reset": "docker compose down -v --remove-orphans",
+		"docker:logs": "docker compose logs -f growthbook"
 	},
 	"lint-staged": {
 		"*.{ts,tsx,js,jsx,json}": [
