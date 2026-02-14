@@ -37,7 +37,7 @@ export class FeaturePagePOM extends BasePOM {
     this.root = this.page.getByRole('main');
 
     /** Верхнее меню */
-    this.actionButton = this.root.locator('[id^="more_menu"]').getByRole('button');
+    this.actionButton = this.root.locator('button[data-radius="full"]');
     this.box = (value: string) =>
       this.root
         .locator('div.rt-Box')
