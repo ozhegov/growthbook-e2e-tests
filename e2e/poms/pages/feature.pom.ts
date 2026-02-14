@@ -11,6 +11,7 @@ export class FeaturePagePOM extends BasePOM {
   readonly box: (value: string) => Locator;
 
   /** Дополнительное меню */
+  readonly actionMenu: Locator;
   readonly archiveButton: Locator;
   readonly unarchiveButton: Locator;
 
@@ -44,12 +45,17 @@ export class FeaturePagePOM extends BasePOM {
         .last();
 
     /** Дополнительное меню */
-    this.archiveButton = this.page.getByRole('button', {
-      name: FEATURE_PAGE.BUTTONS.ARCHIVE,
-    });
-    this.unarchiveButton = this.page.getByRole('button', {
-      name: FEATURE_PAGE.BUTTONS.UNARCHIVE,
-    });
+    this.actionMenu = this.page.locator('.dropdown-menu.show, .rt-DropdownMenuViewport');
+    this.archiveButton = this.actionMenu
+      .getByRole('button', {
+        name: FEATURE_PAGE.BUTTONS.ARCHIVE,
+      })
+      .or(this.page.getByRole('menuitem', { name: FEATURE_PAGE.BUTTONS.ARCHIVE }));
+    this.unarchiveButton = this.actionMenu
+      .getByRole('button', {
+        name: FEATURE_PAGE.BUTTONS.UNARCHIVE,
+      })
+      .or(this.page.getByRole('menuitem', { name: FEATURE_PAGE.BUTTONS.UNARCHIVE }));
 
     /** Модальное окно Archive Feature*/
     this.archiveFeatureModalHeader = this.page.getByRole('heading', {
