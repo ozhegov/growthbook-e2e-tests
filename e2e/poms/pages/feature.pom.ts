@@ -1,5 +1,6 @@
 import type { Locator, Page } from '@playwright/test';
 import { FEATURE_PAGE, URLS } from '../../constants';
+import { expect } from '../../test';
 import { BasePOM } from '../base.pom';
 
 export class FeaturePagePOM extends BasePOM {
@@ -88,6 +89,8 @@ export class FeaturePagePOM extends BasePOM {
    */
   async open(featureId: string) {
     await super.open(URLS.FEATURE_PAGE(featureId));
+
+    await expect(this.actionButton).toBeVisible();
   }
 
   /** Дополнительное меню */
