@@ -11,7 +11,6 @@ export class FeaturePagePOM extends BasePOM {
   readonly box: (value: string) => Locator;
 
   /** Дополнительное меню */
-  readonly actionMenu: Locator;
   readonly archiveButton: Locator;
   readonly unarchiveButton: Locator;
 
@@ -45,11 +44,10 @@ export class FeaturePagePOM extends BasePOM {
         .last();
 
     /** Дополнительное меню */
-    this.actionMenu = this.page.locator('div.dropdown-menu.show');
-    this.archiveButton = this.actionMenu.getByRole('button', {
+    this.archiveButton = this.page.getByRole('button', {
       name: FEATURE_PAGE.BUTTONS.ARCHIVE,
     });
-    this.unarchiveButton = this.actionMenu.getByRole('button', {
+    this.unarchiveButton = this.page.getByRole('button', {
       name: FEATURE_PAGE.BUTTONS.UNARCHIVE,
     });
 
