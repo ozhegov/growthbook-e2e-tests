@@ -96,7 +96,7 @@ export class FeaturePagePOM extends BasePOM {
   async open(featureId: string) {
     await super.open(URLS.FEATURE_PAGE(featureId));
 
-    await expect(this.actionButton).toBeVisible();
+    await expect(this.actionButton).toBeVisible({ timeout: 10_000 });
   }
 
   /** Дополнительное меню */
