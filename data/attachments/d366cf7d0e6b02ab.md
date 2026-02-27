@@ -1,0 +1,469 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e6]:
+      - generic [ref=e8]:
+        - img [ref=e9]
+        - text: Loading...
+      - generic [ref=e11]:
+        - heading "Stop Experiment" [level=4] [ref=e13]
+        - button "Close" [ref=e14] [cursor=pointer]: ×
+      - generic [ref=e16]:
+        - generic [ref=e19]:
+          - generic [ref=e21]: Conclusion
+          - generic [ref=e22]:
+            - generic [ref=e23]:
+              - log [ref=e25]
+              - generic [ref=e26]:
+                - generic [ref=e27]:
+                  - generic [ref=e28]: Won
+                  - combobox [ref=e30]
+                - img [ref=e33]
+            - textbox: won
+        - generic [ref=e36]:
+          - generic [ref=e38] [cursor=pointer]:
+            - checkbox "Enable Temporary Rollout" [checked] [ref=e39]:
+              - img
+            - checkbox [checked]
+            - generic [ref=e41]: Enable Temporary Rollout
+          - generic [ref=e42]:
+            - text: Keep the Experiment running until you can implement the changes in code.
+            - link "Learn more" [ref=e43] [cursor=pointer]:
+              - /url: https://docs.growthbook.io/app/visual#stopping-an-experiment
+        - generic [ref=e45]:
+          - generic [ref=e47]: Variation to Release
+          - generic [ref=e48]:
+            - generic [ref=e49]:
+              - log [ref=e51]
+              - generic [ref=e52]:
+                - generic [ref=e53]:
+                  - generic [ref=e54]: Control
+                  - combobox [ref=e56]
+                - img [ref=e59]
+            - textbox: var_control
+          - generic [ref=e61]: Send 100% of experiment traffic to this variation
+        - generic [ref=e63]:
+          - generic [ref=e64]: Additional Analysis or Details
+          - generic [ref=e66]:
+            - tablist [ref=e68]:
+              - tab "Write" [selected] [ref=e69] [cursor=pointer]:
+                - generic [ref=e70]: Write
+              - tab "Preview" [disabled] [ref=e71]:
+                - generic [ref=e72]: Preview
+            - tabpanel "Write" [ref=e74]:
+              - button "Github-flavored Markdown is supported Upload images by dragging & dropping or clicking here" [ref=e75] [cursor=pointer]:
+                - textbox [ref=e77]
+                - generic [ref=e78]:
+                  - link "Github-flavored Markdown is supported" [ref=e79]:
+                    - /url: https://guides.github.com/features/mastering-markdown/
+                    - img [ref=e80]
+                  - generic [ref=e82]: Upload images by dragging & dropping or clicking here
+              - generic [ref=e85]:
+                - button "Generate Analysis" [disabled] [ref=e86]:
+                  - generic [ref=e87]:
+                    - img [ref=e88]
+                    - text: Generate Analysis
+                - generic [ref=e90]: Paid
+      - generic [ref=e91]:
+        - button "Cancel" [ref=e92] [cursor=pointer]
+        - button "Stop" [active] [ref=e94] [cursor=pointer]
+    - button [ref=e95] [cursor=pointer]:
+      - img [ref=e96]
+    - generic [ref=e98]:
+      - generic [ref=e100]:
+        - link "GrowthBookGrowthBook" [ref=e102] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e103]:
+            - img "GrowthBook" [ref=e104]
+            - img "GrowthBook" [ref=e105]
+        - list [ref=e107]:
+          - listitem
+          - listitem [ref=e108]:
+            - button "Search Ctrl+K" [ref=e109] [cursor=pointer]:
+              - img [ref=e110]
+              - generic [ref=e112]: Search
+              - generic [ref=e113]: Ctrl+K
+          - listitem [ref=e114]:
+            - generic [ref=e117] [cursor=pointer]:
+              - generic [ref=e119]: ALL
+              - strong [ref=e121]: All Projects
+              - img [ref=e122]
+          - listitem [ref=e124]:
+            - link "Home" [ref=e125] [cursor=pointer]:
+              - /url: /
+              - img [ref=e126]
+              - text: Home
+          - listitem [ref=e128]:
+            - link "Features" [ref=e129] [cursor=pointer]:
+              - /url: /features
+              - img [ref=e130]
+              - text: Features
+          - listitem [ref=e132]:
+            - link "Experimentation" [ref=e133] [cursor=pointer]:
+              - /url: /experiments
+              - img [ref=e134]
+              - text: Experimentation
+              - img [ref=e139]
+          - list [ref=e141]:
+            - listitem [ref=e142]:
+              - link "Experiments" [ref=e143] [cursor=pointer]:
+                - /url: /experiments
+            - listitem [ref=e144]:
+              - link "Bandits" [ref=e145] [cursor=pointer]:
+                - /url: /bandits
+            - listitem [ref=e146]:
+              - link "Holdouts" [ref=e147] [cursor=pointer]:
+                - /url: /holdouts
+            - listitem [ref=e148]:
+              - link "Templates" [ref=e149] [cursor=pointer]:
+                - /url: /experiments/templates
+            - listitem [ref=e150]:
+              - link "Power Calculator" [ref=e151] [cursor=pointer]:
+                - /url: /power-calculator
+            - listitem [ref=e152]:
+              - link "Namespaces" [ref=e153] [cursor=pointer]:
+                - /url: /namespaces
+          - listitem [ref=e154]:
+            - link "Product Analytics" [ref=e155] [cursor=pointer]:
+              - /url: /product-analytics/dashboards
+              - img [ref=e156]
+              - text: Product Analytics
+          - listitem [ref=e158]:
+            - link "Metrics and Data" [ref=e159] [cursor=pointer]:
+              - /url: /metrics
+              - img [ref=e160]
+              - text: Metrics and Data
+              - img [ref=e163]
+          - list:
+            - listitem:
+              - link "Metrics" [ref=e165] [cursor=pointer]:
+                - /url: /metrics
+            - listitem:
+              - link "Fact Tables" [ref=e166] [cursor=pointer]:
+                - /url: /fact-tables
+            - listitem:
+              - link "Dimensions" [ref=e167] [cursor=pointer]:
+                - /url: /dimensions
+            - listitem:
+              - link "Data Sources" [ref=e168] [cursor=pointer]:
+                - /url: /datasources
+            - listitem:
+              - link "SQL Explorer" [ref=e169] [cursor=pointer]:
+                - /url: /sql-explorer
+          - listitem [ref=e170]:
+            - link "Insights" [ref=e171] [cursor=pointer]:
+              - /url: /dashboard
+              - img [ref=e172]
+              - text: Insights
+              - img [ref=e175]
+          - list:
+            - listitem:
+              - link "Dashboard" [ref=e177] [cursor=pointer]:
+                - /url: /dashboard
+            - listitem:
+              - link "Learnings" [ref=e178] [cursor=pointer]:
+                - /url: /learnings
+            - listitem:
+              - link "Timeline" [ref=e179] [cursor=pointer]:
+                - /url: /timeline
+            - listitem:
+              - link "Metric Effects" [ref=e180] [cursor=pointer]:
+                - /url: /metric-effects
+            - listitem:
+              - link "Metric Correlations" [ref=e181] [cursor=pointer]:
+                - /url: /correlations
+            - listitem:
+              - link "Presentations" [ref=e182] [cursor=pointer]:
+                - /url: /presentations
+          - listitem [ref=e183]:
+            - link "SDK Configuration" [ref=e184] [cursor=pointer]:
+              - /url: /sdks
+              - img [ref=e185]
+              - text: SDK Configuration
+              - img [ref=e188]
+          - list:
+            - listitem:
+              - link "SDK Connections" [ref=e190] [cursor=pointer]:
+                - /url: /sdks
+            - listitem:
+              - link "Attributes" [ref=e191] [cursor=pointer]:
+                - /url: /attributes
+            - listitem:
+              - link "Environments" [ref=e192] [cursor=pointer]:
+                - /url: /environments
+            - listitem:
+              - link "Saved Groups" [ref=e193] [cursor=pointer]:
+                - /url: /saved-groups
+            - listitem:
+              - link "Archetypes" [ref=e194] [cursor=pointer]:
+                - /url: /archetypes
+            - listitem:
+              - link "Exposures Debugger" [ref=e195] [cursor=pointer]:
+                - /url: /exposure-debugger
+          - listitem [ref=e196]:
+            - link "Settings" [ref=e197] [cursor=pointer]:
+              - /url: /settings
+              - img [ref=e198]
+              - text: Settings
+              - img [ref=e202]
+          - list:
+            - listitem:
+              - link "Tags" [ref=e204] [cursor=pointer]:
+                - /url: /settings/tags
+            - listitem:
+              - link "Custom Fields" [ref=e205] [cursor=pointer]:
+                - /url: /settings/customfields
+      - link "View docs" [ref=e207] [cursor=pointer]:
+        - /url: https://docs.growthbook.io/app/experiment-results
+        - button "View docs" [ref=e208]:
+          - generic [ref=e209]: View docs
+      - generic [ref=e211]:
+        - text: "Build:"
+        - link "4.3.0+540bafe" [ref=e212] [cursor=pointer]:
+          - /url: https://github.com/growthbook/growthbook/commit/540bafeb1c5509a7feb56b60873e6b3ccc9e465d
+        - generic [ref=e213]: (2026-02-27)
+    - generic [ref=e215]:
+      - generic [ref=e216]:
+        - generic "Experiments" [ref=e217]:
+          - link "Experiments" [ref=e218] [cursor=pointer]:
+            - /url: /experiments
+        - generic "Mock Experiment" [ref=e219]:
+          - img [ref=e220]
+          - text: Mock Experiment
+      - generic [ref=e224] [cursor=pointer]:
+        - img [ref=e225]
+        - generic [ref=e228]: "**ADMIN ACCESS**"
+        - img [ref=e229]
+      - generic [ref=e231] [cursor=pointer]:
+        - generic "Experimenter User <experimenter_63@growthbook.local>" [ref=e232]: EU
+        - generic [ref=e233]:
+          - generic [ref=e234]: experimenter_63@growthbook.local
+          - img [ref=e235]
+    - main [ref=e237]:
+      - generic [ref=e238]:
+        - generic [ref=e239]:
+          - generic [ref=e240]:
+            - heading "Mock Experiment" [level=1] [ref=e241]
+            - generic [ref=e243]: "Running: No data"
+          - generic [ref=e244]:
+            - generic [ref=e246]:
+              - button "Make Changes" [ref=e247] [cursor=pointer]:
+                - generic [ref=e248]: Make Changes
+              - button "Stop Experiment" [ref=e249] [cursor=pointer]:
+                - generic [ref=e250]: Stop Experiment
+            - button [ref=e251] [cursor=pointer]:
+              - img [ref=e252]
+        - generic [ref=e254]:
+          - generic [ref=e255]:
+            - generic [ref=e256]:
+              - generic [ref=e257]: "Project:"
+              - generic [ref=e260]: My Mock Project
+            - generic [ref=e261]:
+              - generic [ref=e262]: "Experiment Key:"
+              - generic [ref=e263]: mock-tracking
+            - generic [ref=e264]:
+              - generic [ref=e265]: "Owner:"
+              - generic [ref=e267]:
+                - generic [ref=e269]: MU
+                - text: Mock User
+            - generic [ref=e270]:
+              - generic [ref=e271]: "Created:"
+              - generic [ref=e272]: Feb 27, 2026
+            - generic [ref=e274]:
+              - generic [ref=e275]: "Runtime:"
+              - generic [ref=e276]: Feb 27, 2026 - now
+          - generic [ref=e279]:
+            - generic [ref=e280]: "Tags:"
+            - generic [ref=e284]: mock
+      - tablist [ref=e290]:
+        - generic [ref=e291]:
+          - tab "Overview" [selected] [ref=e292] [cursor=pointer]:
+            - generic [ref=e293]: Overview
+          - tab "Results" [ref=e294] [cursor=pointer]:
+            - generic [ref=e295]: Results
+          - tab "Dashboards" [ref=e296] [cursor=pointer]:
+            - generic [ref=e297]: Dashboards
+          - tab "Health" [disabled] [ref=e299]:
+            - generic [ref=e300]: Health
+      - generic [ref=e302]:
+        - generic [ref=e303]:
+          - heading "Overview" [level=2] [ref=e305]
+          - generic [ref=e307]:
+            - button "Description Edit" [expanded] [ref=e308] [cursor=pointer]:
+              - generic [ref=e310]:
+                - heading "Description" [level=4] [ref=e311]
+                - generic [ref=e312]:
+                  - button "Edit" [ref=e313]:
+                    - generic [ref=e314]: Edit
+                  - img [ref=e315]
+            - region "Description Edit" [ref=e317]:
+              - paragraph [ref=e323]: Mock experiment description
+          - generic [ref=e324]:
+            - generic [ref=e325]:
+              - heading "Hypothesis" [level=4] [ref=e326]
+              - button "Edit" [ref=e327] [cursor=pointer]:
+                - generic [ref=e328]: Edit
+            - generic [ref=e329]: Mock hypothesis
+        - generic [ref=e330]:
+          - heading "Implementation" [level=2] [ref=e331]
+          - generic [ref=e332]:
+            - generic [ref=e333]:
+              - heading "Variations" [level=4] [ref=e334]
+              - button "Edit" [ref=e335] [cursor=pointer]:
+                - generic [ref=e336]: Edit
+            - generic [ref=e338]:
+              - generic [ref=e341]:
+                - generic [ref=e342]:
+                  - generic [ref=e344]:
+                    - generic [ref=e346]: "0"
+                    - heading "Control" [level=4] [ref=e347]
+                  - button [ref=e349] [cursor=pointer]:
+                    - img [ref=e352]
+                - generic [ref=e355]:
+                  - generic [ref=e357]: "Split: 50%"
+                  - button "Add image" [ref=e360] [cursor=pointer]:
+                    - button "Add image" [ref=e361]:
+                      - generic [ref=e362]: Add image
+              - generic [ref=e365]:
+                - generic [ref=e366]:
+                  - generic [ref=e368]:
+                    - generic [ref=e370]: "1"
+                    - heading "Variation 1" [level=4] [ref=e371]
+                  - button [ref=e373] [cursor=pointer]:
+                    - img [ref=e376]
+                - generic [ref=e379]:
+                  - generic [ref=e381]: "Split: 50%"
+                  - button "Add image" [ref=e384] [cursor=pointer]:
+                    - button "Add image" [ref=e385]:
+                      - generic [ref=e386]: Add image
+          - generic [ref=e387]:
+            - generic [ref=e388]:
+              - img [ref=e390]
+              - generic [ref=e394]:
+                - text: Linked Features
+                - generic [ref=e395]: (1)
+            - generic [ref=e397]:
+              - button "mock_feature Live boolean" [ref=e398] [cursor=pointer]:
+                - generic [ref=e400]:
+                  - generic [ref=e401]:
+                    - generic [ref=e402]:
+                      - link "mock_feature" [ref=e403]:
+                        - /url: /features/mock_feature
+                        - heading "mock_feature" [level=4] [ref=e404]:
+                          - text: mock_feature
+                          - img [ref=e405]
+                      - generic [ref=e408]: Live
+                    - generic [ref=e409]: boolean
+                  - button [ref=e411]:
+                    - img [ref=e413]
+              - region "mock_feature Live boolean":
+                - generic [ref=e418]:
+                  - generic [ref=e419]:
+                    - heading "Environments" [level=4] [ref=e420]
+                    - generic [ref=e424]:
+                      - img [ref=e426]
+                      - generic [ref=e428]: production
+                  - generic [ref=e429]:
+                    - heading "Feature values" [level=4] [ref=e430]
+                    - generic [ref=e431]:
+                      - generic [ref=e432]:
+                        - generic [ref=e433]:
+                          - generic [ref=e434]: "0"
+                          - generic "Control" [ref=e435]
+                        - generic [ref=e437]:
+                          - generic [ref=e438]: SERVE
+                          - generic [ref=e440]: "FALSE"
+                      - generic [ref=e442]:
+                        - generic [ref=e443]:
+                          - generic [ref=e444]: "1"
+                          - generic "Variation 1" [ref=e445]
+                        - generic [ref=e447]:
+                          - generic [ref=e448]: SERVE
+                          - generic [ref=e450]: "TRUE"
+          - generic [ref=e452]:
+            - generic [ref=e453]:
+              - heading "Traffic Allocation" [level=4] [ref=e454]
+              - button "Edit" [ref=e455] [cursor=pointer]
+            - generic [ref=e456]:
+              - generic [ref=e457]:
+                - generic [ref=e458]: Traffic
+                - generic [ref=e459]: 100% included, 50.00 / 50.00 split
+              - generic [ref=e460]:
+                - generic [ref=e461]:
+                  - text: Assignment Attribute
+                  - img [ref=e463]
+                - generic [ref=e465]:
+                  - text: id
+                  - generic [ref=e467]: (V2 hashing)
+              - generic [ref=e468]:
+                - generic [ref=e469]:
+                  - text: Namespace
+                  - img [ref=e471]
+                - emphasis [ref=e474]: Global (all users)
+          - generic [ref=e475]:
+            - generic [ref=e476]:
+              - heading "Targeting" [level=4] [ref=e477]
+              - button "Edit" [ref=e478] [cursor=pointer]
+            - generic [ref=e479]:
+              - generic [ref=e480]:
+                - generic [ref=e481]: Attribute Targeting
+                - emphasis [ref=e483]: None
+              - generic [ref=e484]:
+                - generic [ref=e485]: Saved Group Targeting
+                - emphasis [ref=e487]: None
+              - generic [ref=e488]:
+                - generic [ref=e489]: Prerequisite Targeting
+                - emphasis [ref=e491]: None
+          - generic [ref=e492]:
+            - generic [ref=e493]:
+              - heading "Analysis Settings" [level=4] [ref=e494]
+              - button "Edit" [ref=e495] [cursor=pointer]
+            - generic [ref=e496]:
+              - generic [ref=e497]:
+                - generic [ref=e498]: Data Source
+                - emphasis [ref=e500]: none
+              - generic [ref=e501]:
+                - generic [ref=e502]: Experiment Assignment Table
+                - emphasis [ref=e504]: none
+              - generic [ref=e505]:
+                - generic [ref=e506]: Segment
+                - emphasis [ref=e508]: none (all users)
+            - generic [ref=e509]:
+              - generic [ref=e510]:
+                - generic [ref=e511]: Goal Metrics
+                - emphasis [ref=e513]: none
+              - generic [ref=e514]:
+                - generic [ref=e515]: Secondary Metrics
+                - emphasis [ref=e517]: none
+              - generic [ref=e518]:
+                - generic [ref=e519]: Guardrail Metrics
+                - emphasis [ref=e521]: none
+        - button "View Results" [ref=e523] [cursor=pointer]:
+          - img [ref=e524]
+          - generic [ref=e526]: View Results
+      - generic [ref=e528]:
+        - generic [ref=e529]: Comments
+        - generic [ref=e530]:
+          - paragraph [ref=e531]:
+            - emphasis [ref=e532]: No comments yet. Add the first one!
+          - generic [ref=e533]:
+            - separator [ref=e534]
+            - generic [ref=e537]:
+              - tablist [ref=e539]:
+                - tab "Write" [selected] [ref=e540] [cursor=pointer]:
+                  - generic [ref=e541]: Write
+                - tab "Preview" [disabled] [ref=e542]:
+                  - generic [ref=e543]: Preview
+              - tabpanel "Write" [ref=e545]:
+                - button "Github-flavored Markdown is supported Upload images by dragging & dropping or clicking here" [ref=e546] [cursor=pointer]:
+                  - textbox [ref=e548]
+                  - generic [ref=e549]:
+                    - link "Github-flavored Markdown is supported" [ref=e550]:
+                      - /url: https://guides.github.com/features/mastering-markdown/
+                      - img [ref=e551]
+                    - generic [ref=e553]: Upload images by dragging & dropping or clicking here
+                - button "Comment" [ref=e557] [cursor=pointer]
+  - alert [ref=e558]: GrowthBook
+```
