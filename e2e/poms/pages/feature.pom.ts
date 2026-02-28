@@ -37,9 +37,7 @@ export class FeaturePagePOM extends BasePOM {
     this.root = this.page.getByRole('main');
 
     /** Верхнее меню */
-    this.actionButton = this.root
-      .locator('[id^="more_menu"] button')
-      .or(this.root.locator('button[aria-haspopup="menu"]'));
+    this.actionButton = this.root.locator('[id^="more_menu"] button');
     this.box = (value: string) =>
       this.root
         .locator('div.rt-Box')
@@ -48,16 +46,12 @@ export class FeaturePagePOM extends BasePOM {
 
     /** Дополнительное меню */
     this.actionMenu = this.page.locator('.dropdown-menu.show, .rt-DropdownMenuViewport');
-    this.archiveButton = this.actionMenu
-      .getByRole('button', {
-        name: FEATURE_PAGE.BUTTONS.ARCHIVE,
-      })
-      .or(this.page.getByRole('menuitem', { name: FEATURE_PAGE.BUTTONS.ARCHIVE }));
-    this.unarchiveButton = this.actionMenu
-      .getByRole('button', {
-        name: FEATURE_PAGE.BUTTONS.UNARCHIVE,
-      })
-      .or(this.page.getByRole('menuitem', { name: FEATURE_PAGE.BUTTONS.UNARCHIVE }));
+    this.archiveButton = this.actionMenu.getByRole('button', {
+      name: FEATURE_PAGE.BUTTONS.ARCHIVE,
+    });
+    this.unarchiveButton = this.actionMenu.getByRole('button', {
+      name: FEATURE_PAGE.BUTTONS.UNARCHIVE,
+    });
 
     /** Модальное окно Archive Feature*/
     this.archiveFeatureModalHeader = this.page.getByRole('heading', {
