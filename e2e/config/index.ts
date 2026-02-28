@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -10,7 +11,7 @@ export const MAX_RETRIES = 30;
 export const RETRY_DELAY = 1000;
 export const REQUEST_TIMEOUT = 5000;
 
-export const RUN_ID = process.env.RUN_ID ?? Date.now().toString();
+export const RUN_ID = process.env.GITHUB_RUN_ID ?? randomUUID();
 
 if (!fs.existsSync(STORAGE_DIR)) {
   fs.mkdirSync(STORAGE_DIR, { recursive: true });
