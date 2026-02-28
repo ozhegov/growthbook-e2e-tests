@@ -1,6 +1,6 @@
 import type { Route } from '@playwright/test';
-import { experiments } from '../fixtures/experiment/scenarios';
 import { currentExperiment } from '../fixtures/experiment/state';
+import { applyStatusChange, applyStopResult } from '../fixtures/experiment/transitions';
 
 /**
  * Route handler для mock-запросов экспериментов.
@@ -200,17 +200,7 @@ export function experimentRouteHandler() {
 
     // POST /experiment/:id/status
     if (method === 'POST' && pathname.endsWith('/status')) {
-      const body = req.postDataJSON() as { status: 'running' };
-
-      if (body.status === 'running') {
-        Object.assign(currentExperiment, {
-          status: 'running',
-          archived: false,
-          phases: experiments.running.phases,
-          releasedVariationId: '',
-        });
-      }
-
+      applyStatusChange(req.postDataJSON() ?? {});
       return route.fulfill({
         status: 200,
         contentType: 'application/json',
@@ -220,12 +210,7 @@ export function experimentRouteHandler() {
 
     // POST /experiment/:id/stop
     if (method === 'POST' && pathname.endsWith('/stop')) {
-      const body = req.postDataJSON() as { results: 'won' };
-
-      if (body.results === 'won') {
-        Object.assign(currentExperiment, experiments.stoppedWon);
-      }
-
+      applyStopResult(req.postDataJSON() ?? {});
       return route.fulfill({
         status: 200,
         contentType: 'application/json',

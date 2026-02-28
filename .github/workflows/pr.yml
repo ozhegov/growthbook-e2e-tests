@@ -14,7 +14,6 @@ jobs:
       BASE_URL: http://localhost:3000
       API_BASE_URL: http://localhost:3100
       STORAGE_DIR: storage
-      RUN_ID: ${{ github.run_number }}
 
       ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
       ENGINEER_PASSWORD: ${{ secrets.ENGINEER_PASSWORD }}

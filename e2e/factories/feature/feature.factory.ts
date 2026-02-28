@@ -1,6 +1,6 @@
 import type { Faker } from '@faker-js/faker';
 import type { CreateFeatureInput, FeatureValueType } from '../../api/types';
-import { USERS } from '../../test-data/users';
+import { DEFAULT_FEATURE_OWNER } from '../../constants';
 import { getId, getText } from '../';
 
 export interface FeatureFactoryOptions {
@@ -27,7 +27,7 @@ export function getFeature(
 ): CreateFeatureInput & { description: string } {
   return {
     id: options.id ?? getId('feat'),
-    owner: options.owner ?? USERS[0].email,
+    owner: options.owner ?? DEFAULT_FEATURE_OWNER,
     valueType: options.valueType ?? 'boolean',
     defaultValue: options.defaultValue ?? 'true',
     description: options.description ?? getText(faker, { minLength: 10, maxLength: 20 }),
