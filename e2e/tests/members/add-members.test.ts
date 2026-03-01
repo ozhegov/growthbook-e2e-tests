@@ -1,4 +1,3 @@
-import { createUserApiContext, registerUser } from '../../api';
 import { MEMBERS_PAGE, URLS } from '../../constants';
 import { createUserForRegistration } from '../../factories';
 import { setAllureMetadata, step } from '../../helpers/allure';
@@ -7,6 +6,7 @@ import { expect, test } from '../../test';
 test('Пользователь с ролью администратор имеет права добавление членов команды, зарегистрировавшихся не по ссылке-приглашению @allure.id=122000 @role=admin @smoke', async ({
   membersPagePOM,
   faker,
+  userApi,
 }) => {
   await setAllureMetadata({
     owner: 'ozhegovmv',
@@ -19,9 +19,7 @@ test('Пользователь с ролью администратор имее
   await step(
     `Зарегистрировать пользователя "${user.email}" по API без приглашения от администратора`,
     async () => {
-      const guestReq = await createUserApiContext('GUEST');
-      await registerUser(guestReq, user);
-      await guestReq.dispose();
+      await userApi.register(user);
     },
   );
   await step(
