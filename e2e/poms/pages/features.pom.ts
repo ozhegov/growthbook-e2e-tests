@@ -154,14 +154,9 @@ export class FeaturesPagePOM extends BasePOM {
   }
 
   /**
-   * Ожидает успешного создания фичи по сетевому запросу.
+   * Ожидает перехода на страницу созданной фичи (смена URL на /features/:id).
    */
   async waitForFeatureCreated() {
-    await this.page.waitForResponse(
-      (response) =>
-        response.url().includes('/feature?') &&
-        response.status() === 200 &&
-        response.request().method() === 'GET',
-    );
+    await this.page.waitForURL(/\/features\/[^/]+/);
   }
 }
