@@ -1,4 +1,4 @@
-import { addUserToTeam, createUserApiContext, getUserId, registerUser } from '../../api';
+import { addUserToTeam, createUserApiContext } from '../../api';
 import { MEMBERS_PAGE, URLS } from '../../constants';
 import { createUserForRegistration, getUserRole } from '../../factories';
 import { setAllureMetadata, step } from '../../helpers/allure';
@@ -8,6 +8,7 @@ import { apiRoleToTest } from '../../types/user-role.adapter';
 test('Пользователь с ролью администратор имеет право на удаление членов команды @allure.id=122002 @role=admin @smoke', async ({
   membersPagePOM,
   faker,
+  userApi,
 }) => {
   await setAllureMetadata({
     owner: 'ozhegovmv',
@@ -21,10 +22,7 @@ test('Пользователь с ролью администратор имее
   const userId = await step(
     `Зарегистрировать пользователя "${user.email}" и получить его ID по API`,
     async () => {
-      const req = await createUserApiContext('GUEST');
-      const token = await registerUser(req, user);
-
-      const userId = await getUserId(req, token);
+      const { userId } = await userApi.register(user);
 
       return userId;
     },
@@ -32,7 +30,11 @@ test('Пользователь с ролью администратор имее
   await step('Добавить пользователя в члены команды администратором по API', async () => {
     const adminReq = await createUserApiContext('ADMIN');
 
-    await addUserToTeam(adminReq, userId, role);
+    try {
+      await addUserToTeam(adminReq, userId, role);
+    } finally {
+      await adminReq.dispose();
+    }
   });
 
   await step(

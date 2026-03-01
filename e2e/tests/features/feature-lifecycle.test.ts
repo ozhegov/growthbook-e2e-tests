@@ -1,15 +1,13 @@
-import { createFeature } from '../../api';
 import { FEATURE_PAGE, URLS } from '../../constants';
 import { getFeature } from '../../factories';
 import { setAllureMetadata, step } from '../../helpers/allure';
-import { get } from '../../storage/storage.manager';
 import { expect, test } from '../../test';
 
 test('Фича может быть заархивирована и разархивирована @allure.id=122008 @role=admin @regression', async ({
   faker,
   featurePagePOM,
   errorAlertPOM,
-  request,
+  createdFeature,
 }) => {
   await setAllureMetadata({
     owner: 'ozhegovmv',
@@ -19,9 +17,7 @@ test('Фича может быть заархивирована и разарх�
 
   const featureId = await step('Создать фичу по API', async () => {
     const featureData = getFeature(faker);
-    const secretKey = await get('apiKey');
-
-    const { feature } = await createFeature(request, secretKey, featureData);
+    const feature = await createdFeature(featureData);
     const { id: featureId } = feature;
 
     return featureId;
