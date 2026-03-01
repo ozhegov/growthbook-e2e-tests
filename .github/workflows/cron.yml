@@ -46,6 +46,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Кэш браузеров Playwright
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
       # Проверка установки плагина Docker Compose
       - name: Ensure Docker Compose (plugin)
         run: |
