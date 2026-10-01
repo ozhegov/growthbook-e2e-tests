@@ -8,9 +8,9 @@
         - /url: /
         - img "GrowthBook" [ref=e8]
       - generic [ref=e10] [cursor=pointer]:
-        - generic "Engineer User <engineer_36667920034@growthbook.local>" [ref=e11]: EU
+        - generic "Engineer User <engineer_36815101601@growthbook.local>" [ref=e11]: EU
         - generic [ref=e13]:
-          - text: engineer_36667920034@growthbook.local
+          - text: engineer_36815101601@growthbook.local
           - img [ref=e14]
     - main [ref=e16]:
       - generic [ref=e18]:
